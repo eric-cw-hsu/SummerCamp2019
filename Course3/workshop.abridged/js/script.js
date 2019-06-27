@@ -4,12 +4,13 @@ var bookDataFromLocalStorage = [];
 $(function(){
     loadBookData();
     var data = [
-        {text:"資料庫",value:""},
-        {text:"網際網路",value:""},
-        {text:"應用系統整合",value:""},
-        {text:"家庭保健",value:""},
-        {text:"語言",value:""}
-    ]
+        {text:"資料庫",value:"database"},
+        {text:"網際網路",value:"internet"},
+        {text:"應用系統整合",value:"system"},
+        {text:"家庭保健",value:"home"},
+        {text:"語言",value:"language"}
+    ];
+
     $("#book_category").kendoDropDownList({
         dataTextField: "text",
         dataValueField: "value",
@@ -61,6 +62,27 @@ function loadBookData(){
     }
 }
 
-function onChange(){}
+function onChange(){
+    var category = $("#book_category").val();
+    $(".book-image").attr("src", "image/"+category+".jpg");
+};
   
-function deleteBook(){}
+function deleteBook(option){
+    var grid = $("#book_grid").data("kendoGrid");
+    var dataItem = grid.dataItem($(option.currentTarget).closest("tr"));  
+    var localData = JSON.parse(localStorage['bookData']);
+    for(var i = 0; i < localData.length; i++)
+    {
+        console.log(localData[i].BookId + ' ' + dataItem.BookId);
+        if(localData[i].BookId == dataItem.BookId)
+        {
+            console.log("find");
+            localData.splice(i, 1);
+            break;
+        }
+    }
+    localStorage["bookData"] = JSON.stringify(localData);
+    location.reload();
+    //option.success(localData);
+};
+

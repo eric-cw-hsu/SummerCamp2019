@@ -58,6 +58,23 @@ $(function(){
         ]
         
     });
+
+    $(".book-grid-search").keydown(function(keyboard){
+        code = (keyboard.keyCode ? keyboard.keyCode : keyboard.which);
+        if (code == 13)
+        {
+            var find_target = $(".book-grid-search").val();
+            console.log(find_target);
+            var dataSource = JSON.parse(localStorage.getItem("bookData"));
+            for(var i = 0; i < dataSource.length; i++)
+            {
+                if(find_target == dataSource[i].BookName)
+                {
+                    
+                }
+            }
+        }
+    });
 })
 
 function loadBookData(){
@@ -108,4 +125,6 @@ $("button").click(function(){
     localStorage.setItem("bookData", JSON.stringify(datasource));
     location.reload();
 })
+
+
 

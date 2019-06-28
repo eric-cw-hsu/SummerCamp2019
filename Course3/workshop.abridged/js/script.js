@@ -59,21 +59,24 @@ $(function(){
         
     });
 
-    $(".book-grid-search").keydown(function(keyboard){
-        code = (keyboard.keyCode ? keyboard.keyCode : keyboard.which);
-        if (code == 13)
-        {
-            var find_target = $(".book-grid-search").val();
-            console.log(find_target);
-            var dataSource = JSON.parse(localStorage.getItem("bookData"));
-            for(var i = 0; i < dataSource.length; i++)
-            {
-                if(find_target == dataSource[i].BookName)
+    $(".book-grid-search").bind('input propertychange', function(){
+        console.log($(".book-grid-search").val());
+        var target = $(".book-grid-search").val();
+        $("#book_grid").data("kendoGrid").dataSource.filter({
+            logic: "or",
+            filters:[
                 {
-                    
+                    field: "BookName",
+                    operator: "contains",
+                    value: target
+                },
+                {
+                    field: "BookAuthor",
+                    operator: "contains",
+                    value: target
                 }
-            }
-        }
+            ]
+        });
     });
 })
 

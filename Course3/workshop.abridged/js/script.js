@@ -60,7 +60,6 @@ $(function(){
     });
 
     $(".book-grid-search").bind('input propertychange', function(){
-        console.log($(".book-grid-search").val());
         var target = $(".book-grid-search").val();
         $("#book_grid").data("kendoGrid").dataSource.filter({
             logic: "or",
@@ -99,10 +98,8 @@ function deleteBook(option){
     var localData = JSON.parse(localStorage['bookData']);
     for(var i = 0; i < localData.length; i++)
     {
-        console.log(localData[i].BookId + ' ' + dataItem.BookId);
         if(localData[i].BookId == dataItem.BookId)
         {
-            console.log("find");
             localData.splice(i, 1);
             break;
         }
@@ -128,6 +125,33 @@ $("button").click(function(){
     localStorage.setItem("bookData", JSON.stringify(datasource));
     location.reload();
 })
+
+$(document).ready(function() {
+    var myWindow = $("#window"),
+        undo = $("#undo");
+
+    undo.click(function() {
+        myWindow.data("kendoWindow").center().open();
+        //undo.fadeOut();
+    });
+
+    function onClose() {
+        undo.fadeIn();
+    }
+
+    myWindow.kendoWindow({
+        width: "600px",
+        title: "新增書籍",
+        visible: false,
+        actions: [
+            "Pin",
+            "Minimize",
+            "Maximize",
+            "Close"
+        ],
+        close: onClose
+    })
+});
 
 
 

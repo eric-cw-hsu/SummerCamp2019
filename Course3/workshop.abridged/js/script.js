@@ -131,25 +131,26 @@ function deleteBook(option){
 $("#add_book").click(function(){
     if(validator.validate())
     {
-
-        var insert_category = $("#book_category").data("kendoDropDownList").text();
-        var insert_name = $("#book_name").val();
-        var insert_author = $("#book_author").val();
-        var insert_date = $("#bought_datepicker").val();
+        var localData = JSON.parse(localStorage.getItem("bookData"));
+        var new_book = {};
+        
+        new_book.BookId = localData[localData.length-1].BookId+1;
+        new_book.BookCategory = $("#book_category").data("kendoDropDownList").text();
+        new_book.BookName = $("#book_name").val();
+        new_book.BookAuthor = $("#book_author").val();
+        new_book.BookBoughtDate = $("#bought_datepicker").val();
+        new_book.BookPublisher = $("#book_publisher").val();
+        //ipush data in the local and the table
         var datasource = JSON.parse(localStorage.getItem("bookData"));
-        var insert_Id = datasource[datasource.length-1].BookId+1;
-        datasource.push({
-            BookId: insert_Id,
-            BookName: insert_name,
-            BookCategory: insert_category,
-            BookAuthor: insert_author,
-            BookBoughtDate: insert_date
-        });
-        localStorage.setItem("bookData", JSON.stringify(datasource));
-
+        datasource.push(new_book);
+        var grid = $("#book_grid").data("kendoGrid");
+        grid.dataSource.add(new_book);
+        localStorage.setItem("bookData", JSON.stringify(datasource));   
+        //initialization
         $("#book_name").val('');
         $("#book_author").val('');
-        location.reload();
+        $("#book_publisher").val('');
+        $("#window").data("kendoWindow").close();
     }
     else
     {

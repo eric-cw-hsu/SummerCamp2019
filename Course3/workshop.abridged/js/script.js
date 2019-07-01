@@ -23,7 +23,7 @@ $(function(){
     });
     
     $("#bought_datepicker").kendoDatePicker({
-        value:new Date(),
+        value: new Date(),
         format: "yyyy-MM-dd",
         dateInput: true
     });
@@ -184,6 +184,7 @@ $(document).ready(function() {
             "Maximize",
             "Close"
         ],
+        modal: true,
         close: onClose
     })
 });

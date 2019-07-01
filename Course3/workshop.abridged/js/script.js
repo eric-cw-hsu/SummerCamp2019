@@ -123,6 +123,7 @@ function deleteBook(option){
             break;
     }
     localData.splice(middle, 1);
+    //end binary search
     localStorage["bookData"] = JSON.stringify(localData);
     grid.dataSource.remove(dataItem);
 };

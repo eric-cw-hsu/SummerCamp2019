@@ -107,14 +107,22 @@ function deleteBook(option){
     var grid = $("#book_grid").data("kendoGrid");
     var dataItem = grid.dataItem($(option.currentTarget).closest("tr"));  
     var localData = JSON.parse(localStorage['bookData']);
-    for(var i = 0; i < localData.length; i++)
+    var target = dataItem.BookId;
+    //binary search
+    var left = 0;
+    var right = localData.length-1;
+    var middle = 0;
+    while(left <= right)
     {
-        if(localData[i].BookId == dataItem.BookId)
-        {
-            localData.splice(i, 1);
+        middle = Math.floor((left+right)/2);
+        if(localData[middle].BookId > target)
+            right = middle-1;
+        else if(localData[middle].BookId < target)
+            left = middle+1;
+        else if(localData[middle].BookId == target)
             break;
-        }
     }
+    localData.splice(middle, 1);
     localStorage["bookData"] = JSON.stringify(localData);
     grid.dataSource.remove(dataItem);
 };

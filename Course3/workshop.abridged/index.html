@@ -32,17 +32,21 @@
                         </li>
                         <li>
                             <label>書名</label>
-                            <input id="book_name" type="text" class="k-textbox" style="width: 100%;" />
+                            <input id="book_name" type="text" class="k-textbox" name="bookname" style="width: 100%;" required validationMessage="bookname is not valid"/>
                         </li>
                         <li>
                             <label>作者</label>
-                            <input id="book_author" type="text" class="k-textbox" style="width: 100%;" />
+                            <input id="book_author" type="text" class="k-textbox" name="bookauthor" style="width: 100%;" required validationMessage="bookauthor is not valid"/>
                         </li>
                         <li>
                             <label>購買日期</label>
                             <input id="bought_datepicker" value="10/10/2011" title="datepicker" style="width: 100%" />
                             <!-- <input type="text" class="k-textbox" style="width: 100%;" /> -->
                         </li>
+                        <li>
+                                <label>出版社</label>
+                                <input id="book_publisher" type="text" class="k-textbox" name="bookpublisher" style="width: 100%;" required validationMessage="bookpublisher is not valid"/>
+                            </li>
                         <li class="uk-text-right">
                             <button class="k-button k-primary btn-add-book" id="add_book">新增</button>
                         </li>

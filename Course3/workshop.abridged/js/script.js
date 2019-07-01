@@ -36,7 +36,8 @@ $(function(){
                         BookName: { type: "string" },
                         BookCategory: { type: "string" },
                         BookAuthor: { type: "string" },
-                        BookBoughtDate: { type: "string" }
+                        BookBoughtDate: { type: "string" },
+                        BookPublisher: {type: "string" }
                     }
                 }
             },
@@ -50,11 +51,12 @@ $(function(){
             numeric: false
         },
         columns: [
-            { field: "BookId", title: "書籍編號",width:"10%"},
-            { field: "BookName", title: "書籍名稱", width: "50%" },
+            { field: "BookId", title: "書籍編號",width:"9%"},
+            { field: "BookName", title: "書籍名稱", width: "39%" },
             { field: "BookCategory", title: "書籍種類", width: "10%" },
             { field: "BookAuthor", title: "作者", width: "15%" },
-            { field: "BookBoughtDate", title: "購買日期", width: "15%" },
+            { field: "BookBoughtDate", title: "購買日期", width: "12%" },
+            { field: "BookPublisher", title: "出版社", width: "15%"},
             { command: { text: "刪除", click: deleteBook }, title: " ", width: "120px" }
         ]
         
@@ -74,7 +76,12 @@ $(function(){
                     field: "BookAuthor",
                     operator: "contains",
                     value: target
-                }
+                },
+                {
+                    field: "BookPublisher",
+                    operator: "contains",
+                    value: target
+                },
             ]
         });
     });
@@ -110,15 +117,12 @@ function deleteBook(option){
     }
     localStorage["bookData"] = JSON.stringify(localData);
     grid.dataSource.remove(dataItem);
-    //$("#book_grid").data("kendoGrid").dataSource.read();
-    //location.reload();
 };
 
 $("#add_book").click(function(){
     if(validator.validate())
     {
-        //status.removeClass("invalid");
-        //status.addClass("valid");
+
         var insert_category = $("#book_category").data("kendoDropDownList").text();
         var insert_name = $("#book_name").val();
         var insert_author = $("#book_author").val();

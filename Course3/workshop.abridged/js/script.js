@@ -21,9 +21,11 @@ $(function(){
         index: 0,
         change: onChange
     });
+    
     $("#bought_datepicker").kendoDatePicker({
         value:new Date(),
-        format: "yyyy-MM-dd"
+        format: "yyyy-MM-dd",
+        dateInput: true
     });
 
     $("#book_grid").kendoGrid({
@@ -133,12 +135,12 @@ $("#add_book").click(function(){
     {
         var localData = JSON.parse(localStorage.getItem("bookData"));
         var new_book = {};
-        
+
         new_book.BookId = localData[localData.length-1].BookId+1;
         new_book.BookCategory = $("#book_category").data("kendoDropDownList").text();
         new_book.BookName = $("#book_name").val();
         new_book.BookAuthor = $("#book_author").val();
-        new_book.BookBoughtDate = $("#bought_datepicker").val();
+        new_book.BookBoughtDate = $("#bought_datepicker").data("kendoDatePicker").value();
         new_book.BookPublisher = $("#book_publisher").val();
         //ipush data in the local and the table
         var datasource = JSON.parse(localStorage.getItem("bookData"));
@@ -154,8 +156,8 @@ $("#add_book").click(function(){
     }
     else
     {
-        $(".status").removeClass("valid")
-                    .addClass("invalid");
+        //$(".status").removeClass("valid")
+        //            .addClass("invalid");
     }
 })
 

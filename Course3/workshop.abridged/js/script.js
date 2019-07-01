@@ -1,5 +1,6 @@
-
+//declaration
 var bookDataFromLocalStorage = [];
+var validator;
 
 $(function(){
     loadBookData();
@@ -77,6 +78,9 @@ $(function(){
             ]
         });
     });
+
+    validator = $("#window").kendoValidator().data("kendoValidator");
+    status = $(".status");
 })
 
 function loadBookData(){
@@ -105,25 +109,40 @@ function deleteBook(option){
         }
     }
     localStorage["bookData"] = JSON.stringify(localData);
-    location.reload();
+    grid.dataSource.remove(dataItem);
+    //$("#book_grid").data("kendoGrid").dataSource.read();
+    //location.reload();
 };
 
-$("button").click(function(){
-    var insert_category = $("#book_category").data("kendoDropDownList").text();
-    var insert_name = $("#book_name").val();
-    var insert_author = $("#book_author").val();
-    var insert_date = $("#bought_datepicker").val();
-    var datasource = JSON.parse(localStorage.getItem("bookData"));
-    var insert_Id = datasource[datasource.length-1].BookId+1;
-    datasource.push({
-        BookId: insert_Id,
-        BookName: insert_name,
-        BookCategory: insert_category,
-        BookAuthor: insert_author,
-        BookBoughtDate: insert_date
-    });
-    localStorage.setItem("bookData", JSON.stringify(datasource));
-    location.reload();
+$("#add_book").click(function(){
+    if(validator.validate())
+    {
+        //status.removeClass("invalid");
+        //status.addClass("valid");
+        var insert_category = $("#book_category").data("kendoDropDownList").text();
+        var insert_name = $("#book_name").val();
+        var insert_author = $("#book_author").val();
+        var insert_date = $("#bought_datepicker").val();
+        var datasource = JSON.parse(localStorage.getItem("bookData"));
+        var insert_Id = datasource[datasource.length-1].BookId+1;
+        datasource.push({
+            BookId: insert_Id,
+            BookName: insert_name,
+            BookCategory: insert_category,
+            BookAuthor: insert_author,
+            BookBoughtDate: insert_date
+        });
+        localStorage.setItem("bookData", JSON.stringify(datasource));
+
+        $("#book_name").val('');
+        $("#book_author").val('');
+        location.reload();
+    }
+    else
+    {
+        $(".status").removeClass("valid")
+                    .addClass("invalid");
+    }
 })
 
 $(document).ready(function() {

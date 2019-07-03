@@ -27,7 +27,8 @@ namespace workshop.Models
         {
 
             DataTable dt = new DataTable();
-            string sql = @"SELECT BD.BOOK_ID, BOOK_NAME, CODE_NAME, USER_ENAME, BOOK_CLASS_NAME, FORMAT(BOOK_BOUGHT_DATE, 'yyyy/MM/dd') AS BOOK_BOUGHT_DATE
+            string sql = @"SELECT BD.BOOK_ID, BOOK_NAME, CODE_NAME, USER_ENAME, BOOK_CLASS_NAME, 
+                            FORMAT(BOOK_BOUGHT_DATE, 'yyyy/MM/dd') AS BOOK_BOUGHT_DATE
                             FROM BOOK_DATA AS BD   
 
                             LEFT JOIN MEMBER_M AS MM
@@ -93,7 +94,29 @@ namespace workshop.Models
             return BookId;
         }
 
-
+        /// <summary>
+        /// 刪除客戶
+        /// </summary>
+        public void DeleteBookById(string BookId)
+        {
+            try
+            {
+                string sql = "Delete FROM BOOK_DATA " +
+                    "         Where BOOK_ID = @BookId";
+                using (SqlConnection conn = new SqlConnection(this.GetDBConnectionString()))
+                {
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand(sql, conn);
+                    cmd.Parameters.Add(new SqlParameter("@BookId", BookId));
+                    cmd.ExecuteNonQuery();
+                    conn.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
 
         /// <summary>
         /// Map資料進List

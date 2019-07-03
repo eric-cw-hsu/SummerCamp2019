@@ -6,15 +6,13 @@ using System.Web.Mvc;
 
 namespace workshop.Controllers
 {
-    public class DefaultController : Controller
+    public class LibraryController : Controller
     {
         Models.Service Service = new Models.Service();
 
         // GET: Default
         public ActionResult Index()
         {
-
-
             ViewBag.LendName = this.Service.GetTable("MEMBER_M", "USER_ENAME", "USER_ID");
             ViewBag.BookCategory = this.Service.GetTable("BOOK_CLASS", "BOOK_CLASS_NAME", "BOOK_CLASS_ID");
             ViewBag.BookStatus = this.Service.GetCodeTable("BOOK_STATUS");
@@ -60,6 +58,27 @@ namespace workshop.Controllers
                 TempData["message"] = "存檔成功";
             }
             return View(Book);
+        }
+
+        /// <summary>
+        /// 刪除員工
+        /// </summary>
+        /// <param name="employeeId"></param>
+        /// <returns></returns>
+        [HttpPost()]
+        public JsonResult DeleteEmployee(string BookId)
+        {
+            try
+            {
+                Models.BookService BookService = new Models.BookService();
+                BookService.DeleteBookById(BookId);
+                return this.Json(true);
+            }
+
+            catch (Exception ex)
+            {
+                return this.Json(false);
+            }
         }
     }
 

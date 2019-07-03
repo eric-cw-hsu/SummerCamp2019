@@ -27,8 +27,9 @@ namespace workshop.Models
         /// <summary>
         /// 員工姓名(Last Name)
         /// </summary>
+        [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}")]
         [DisplayName("購買日期")]
-        public string BoughtDate { get; set; }
+        public string BookBoughtDate { get; set; }
 
         /// <summary>
         /// 職稱
@@ -41,13 +42,6 @@ namespace workshop.Models
         [Required(ErrorMessage = "此欄位必填")]
         public string LendName { get; set; }
 
-        /// <summary>
-        /// 稱謂
-        /// </summary>
-        [DisplayName("稱謂")]
-        [Required(ErrorMessage = "此欄位必填")]
-        public string TitleOfCourtesy { get; set; }
-
 
         /// <summary>
         /// 任職日期
@@ -56,6 +50,26 @@ namespace workshop.Models
         [Required(ErrorMessage = "此欄位必填")]
         public string BookCategory { get; set; }
 
-    
+        /// <summary>
+        /// 任職日期
+        /// </summary>
+        [DisplayName("作者")]
+        [Required(ErrorMessage = "此欄位必填")]
+        public string BookAuthor { get; set; }
+
+        /// <summary>
+        /// 任職日期
+        /// </summary>
+        [DisplayName("出版商")]
+        [Required(ErrorMessage = "此欄位必填")]
+        public string BookPublisher { get; set; }
+
+        /// <summary>
+        /// 任職日期
+        /// </summary>
+        [DisplayName("內容簡介")]
+        [Required(ErrorMessage = "此欄位必填")]
+        public string BookInfo { get; set; }
     }
+    
 }

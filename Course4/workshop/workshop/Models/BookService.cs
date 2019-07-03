@@ -27,9 +27,24 @@ namespace workshop.Models
         {
 
             DataTable dt = new DataTable();
-            string sql = @"SELECT *
-                           FROM BOOK_DATA";
+            string sql = @"SELECT BD.BOOK_ID, BOOK_NAME, CODE_NAME, USER_ENAME, BOOK_CLASS_NAME, FORMAT(BOOK_BOUGHT_DATE, 'yyyy/MM/dd') AS BOOK_BOUGHT_DATE
+                            FROM BOOK_DATA AS BD   
 
+                            LEFT JOIN MEMBER_M AS MM
+                            ON BD.BOOK_KEEPER = MM.USER_ID
+
+                            INNER JOIN BOOK_CLASS AS BC
+                            ON BD.BOOK_CLASS_ID = BC.BOOK_CLASS_ID
+
+                            INNER JOIN BOOK_CODE AS BCD
+                            ON (BD.BOOK_STATUS = BCD.CODE_ID AND BCD.CODE_TYPE = 'BOOK_STATUS')
+
+                            WHERE (BD.BOOK_ID = @BookName OR @BookName = '') AND
+                                    (BC.BOOK_CLASS_ID = @BookCategory OR @BookCategory = '') AND
+                                    (USER_ID = @LendName OR @LendName = '') AND
+                                    (CODE_ID = @BookStatus OR @BookStatus = '')
+                            ORDER BY BOOK_CLASS_NAME, BOOK_NAME, USER_ENAME
+                            ";
             using (SqlConnection conn = new SqlConnection(this.GetDBConnectionString()))
             {
                 conn.Open();
@@ -59,11 +74,11 @@ namespace workshop.Models
                 result.Add(new Books()
                 {
                     BookId = (int)row["Book_ID"],
-                    BookName = row["Book_Name"].ToString(),
-                    BoughtDate = row["BOOK_Bought_Date"].ToString(),
-                    BookStatus = row["Book_Status"].ToString(),
-                    //LendName = row["Lend_Name"].ToString(),
-                    //BookCategory = row["Book_Category"].ToString(),
+                    BookName = row["Book_NAME"].ToString(),
+                    BookBoughtDate = row["BOOK_BOUGHT_DATE"].ToString(),
+                    BookStatus = row["CODE_NAME"].ToString(),
+                    LendName = row["USER_ENAME"].ToString(),
+                    BookCategory = row["BOOK_CLASS_NAME"].ToString(),
                 });
             }
             return result;

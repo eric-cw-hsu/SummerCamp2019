@@ -21,21 +21,21 @@
     <div class="form-group">
         @Html.LabelFor(model => model.BookCategory, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.TextBoxFor(model => model.BookCategory, new { @class = "form-control" })
+            @Html.DropDownListFor(model => model.BookCategory, (List<SelectListItem>)ViewBag.BookCategory, "請選擇", new { @class = "form-control" })
         </div>
     </div>
-
+    
     <div class="form-group">
         @Html.LabelFor(model => model.LendName, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.TextBoxFor(model => model.LendName, new { @class = "form-control" })
+            @Html.DropDownListFor(model => model.LendName, (List<SelectListItem>)ViewBag.LendName, "請選擇", new { @class = "form-control" })
         </div>
     </div>
 
     <div class="form-group">
         @Html.LabelFor(model => model.BookStatus, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.TextBoxFor(model => model.BookStatus, new { @class = "form-control" })
+            @Html.DropDownListFor(model => model.BookStatus, (List<SelectListItem>)ViewBag.BookStatus, "請選擇", new { @class = "form-control" })
         </div>
     </div>
 
@@ -50,12 +50,11 @@
         </div>
     </div>
 
-    @if (true || ViewBag.SearchResult != null)
+    @if (ViewBag.SearchResult != null)
     {
         <table class="table table-bordered table-striped">
             <thead>
                 <tr id="search_table">
-                    <th></th>
                     <th>圖書類別</th>
                     <th>書名</th>
                     <th>購書日期</th>
@@ -67,24 +66,24 @@
                 </tr>
             </thead>
             <tbody>
-                @*
+
                 @foreach (var item in (List<workshop.Models.Books>)ViewBag.SearchResult)
                 {
                     <tr id='@item.BookId'>
                         <td>@item.BookCategory</td>
                         <td>@item.BookName</td>
-                        <td>@item.BoughtDate</td>
+                        <td>@item.BookBoughtDate</td>
                         <td>@item.BookStatus</td>
                         <td>@item.LendName</td>
-                        <td>@Html.ActionLink("修改", "UpdateEmployee", new { id = item.BookId, @value = @item.BookId })</td>
+                        <td>借閱紀錄</td>
+                        <td>@Html.ActionLink("編輯", "UpdateBook", new { id = item.BookId, @value = @item.BookId })</td>
                         <td>
                             <a class="btnDelete" href="#" onclick="test(this,'@item.BookId');">刪除</a>
-                            <input class="hidEmployeeId" type="hidden" value='@item.BookId' />
+                            <input class="hidBookId" type="hidden" value='@item.BookId' />
                         </td>
-                        <td></td>
                     </tr>
                 }
-                *@
+
             </tbody>
         </table>
     }

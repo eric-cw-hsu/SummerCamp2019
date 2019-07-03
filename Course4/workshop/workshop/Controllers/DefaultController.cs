@@ -34,7 +34,7 @@ namespace workshop.Controllers
             Models.BookService BookService = new Models.BookService();
             //if (arg.HireDateEnd == null)
             //    arg.HireDateEnd = DateTime.Now.ToShortDateString();
-            ViewBag.SearchResult = BookService.GetEmployeeByCondtioin(arg);
+            ViewBag.SearchResult = BookService.GetBookByCondtioin(arg);
             //ViewBag.JobTitleCodeData = this.Service.GetCodeTable("TITLE");
             return View("Index");
         }
@@ -42,10 +42,25 @@ namespace workshop.Controllers
         [HttpGet()]
         public ActionResult InsertBook()
         {
-            ViewBag.BookCategory = this.Service.GetCodeTable("BOOK_STATUS");
-            return View();
+            ViewBag.BookCategory = this.Service.GetTable("BOOK_CLASS", "BOOK_CLASS_NAME", "BOOK_CLASS_ID");
+            return View(new Models.Books());
         }
 
+        [HttpPost()]
+        public ActionResult InsertBook(Models.Books Book)
+        {
+            ViewBag.BookCategory = this.Service.GetTable("BOOK_CLASS", "BOOK_CLASS_NAME", "BOOK_CLASS_ID");
+
+            if (ModelState.IsValid)
+            {
+                Models.BookService BookService = new Models.BookService();
+                if (Book.BookBoughtDate != null)
+                    Book.BookBoughtDate = Book.BookBoughtDate.Replace(",", "");
+                BookService.InsertBook(Book);
+                TempData["message"] = "存檔成功";
+            }
+            return View(Book);
+        }
     }
 
    

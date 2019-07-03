@@ -23,7 +23,7 @@ namespace workshop.Models
         /// 依照條件取得客戶資料
         /// </summary>
         /// <returns></returns>
-        public List<Models.Books> GetEmployeeByCondtioin(Models.BookSearch arg)
+        public List<Models.Books> GetBookByCondtioin(Models.BookSearch arg)
         {
 
             DataTable dt = new DataTable();
@@ -39,7 +39,7 @@ namespace workshop.Models
                             INNER JOIN BOOK_CODE AS BCD
                             ON (BD.BOOK_STATUS = BCD.CODE_ID AND BCD.CODE_TYPE = 'BOOK_STATUS')
 
-                            WHERE (BD.BOOK_ID = @BookName OR @BookName = '') AND
+                            WHERE (BD.BOOK_NAME = @BookName OR @BookName = '') AND
                                     (BC.BOOK_CLASS_ID = @BookCategory OR @BookCategory = '') AND
                                     (USER_ID = @LendName OR @LendName = '') AND
                                     (CODE_ID = @BookStatus OR @BookStatus = '')
@@ -57,19 +57,53 @@ namespace workshop.Models
                 sqlAdapter.Fill(dt);
                 conn.Close();
             }
-            return this.MapEmployeeDataToList(dt);
+            return this.MapBookDataToList(dt);
         }
+
+        /// <summary>
+        /// 新增書籍
+        /// </summary>
+        /// <param name="Book"></param>
+        /// <returns>員工編號</returns>
+        public int InsertBook(Models.Books Book)
+        {
+            string sql = @"INSERT INTO BOOK_DATA
+                            (
+                                BOOK_NAME, BOOK_AUTHOR, BOOK_PUBLISHER, BOOK_NOTE, BOOK_BOUGHT_DATE, BOOK_CLASS_ID, BOOK_STATUS
+                            )
+                            VALUES
+                            (
+                                @BookName, @BookAuthor, @BookPublisher, @BookNote, @BookBoughtDate, @BookClassId, 'A'
+                            )
+                            Select SCOPE_IDENTITY()";
+            int BookId;
+            using (SqlConnection conn = new SqlConnection(this.GetDBConnectionString()))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.Add(new SqlParameter("@BookName", Book.BookName));
+                cmd.Parameters.Add(new SqlParameter("@BookAuthor", Book.BookAuthor));
+                cmd.Parameters.Add(new SqlParameter("@BookPublisher", Book.BookPublisher));
+                cmd.Parameters.Add(new SqlParameter("@BookNote", Book.BookNote));
+                cmd.Parameters.Add(new SqlParameter("BookBoughtDate", Book.BookBoughtDate));
+                cmd.Parameters.Add(new SqlParameter("@BookClassId", Book.BookClassId == null ? (Object)DBNull.Value : Book.BookClassId));
+                BookId = Convert.ToInt32(cmd.ExecuteScalar());
+                conn.Close();
+            }
+            return BookId;
+        }
+
 
 
         /// <summary>
         /// Map資料進List
         /// </summary>
-        /// <param name="employeeData"></param> ??
+        /// <param name="BookData"></param> ??
         /// <returns></returns>
-        private List<Models.Books> MapEmployeeDataToList(DataTable employeeData)
+        private List<Models.Books> MapBookDataToList(DataTable BookData)
         {   
             List<Models.Books> result = new List<Books>();
-            foreach (DataRow row in employeeData.Rows)
+            foreach (DataRow row in BookData.Rows)
             {
                 result.Add(new Books()
                 {

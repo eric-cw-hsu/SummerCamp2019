@@ -4,7 +4,7 @@
     ViewBag.Title = "InsertBook";
 }
 
-<h2>InsertEmployee</h2>
+<h2>InsertBook</h2>
 
 
 @using (Html.BeginForm())
@@ -42,10 +42,10 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.BookInfo, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.BookNote, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.TextBoxFor(model => model.BookInfo, new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.BookInfo, "", new { @class = "text-danger" })
+            @Html.TextBoxFor(model => model.BookNote, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.BookNote, "", new { @class = "text-danger" })
         </div>
     </div>
     
@@ -61,7 +61,7 @@
     <div class="form-group">
         @Html.LabelFor(model => model.BookCategory, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.DropDownListFor(model => model.BookCategory, (List<SelectListItem>)ViewBag.BookCategory, "請選擇", new { @class = "form-control" })
+            @Html.DropDownListFor(model => model.BookClassId, (List<SelectListItem>)ViewBag.BookCategory, "請選擇", new { @class = "form-control" })
         </div>
     </div>
 
@@ -69,7 +69,7 @@
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Create" class="btn btn-default" />
+            <input type="submit" value="存檔" class="btn btn-default" />
         </div>
     </div>
 </div>

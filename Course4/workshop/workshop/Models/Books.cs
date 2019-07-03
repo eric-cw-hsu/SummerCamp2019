@@ -35,11 +35,10 @@ namespace workshop.Models
         /// 職稱
         /// </summary>
         [DisplayName("借閱狀態")]
-        [Required(ErrorMessage = "此欄位必填")]
         public string BookStatus { get; set; }
 
+
         [DisplayName("借閱人")]
-        [Required(ErrorMessage = "此欄位必填")]
         public string LendName { get; set; }
 
 
@@ -47,7 +46,6 @@ namespace workshop.Models
         /// 任職日期
         /// </summary>
         [DisplayName("書籍種類")]
-        [Required(ErrorMessage = "此欄位必填")]
         public string BookCategory { get; set; }
 
         /// <summary>
@@ -69,7 +67,14 @@ namespace workshop.Models
         /// </summary>
         [DisplayName("內容簡介")]
         [Required(ErrorMessage = "此欄位必填")]
-        public string BookInfo { get; set; }
+        public string BookNote { get; set; }
+
+        /// <summary>
+        /// 任職日期
+        /// </summary>
+        [DisplayName("類別代號")]
+        [Required(ErrorMessage = "此欄位必填")]
+        public string BookClassId { get; set; }
     }
     
 }

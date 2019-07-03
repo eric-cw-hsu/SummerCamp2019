@@ -4,7 +4,7 @@
     ViewBag.Title = "Index";
 }
 
-<h2>圖書維護系統</h2>
+<h2>書籍查詢</h2>
 
 
 @using (Html.BeginForm("Index", "Employee", FormMethod.Post, new { id = "Form1" }))
@@ -55,33 +55,36 @@
         <table class="table table-bordered table-striped">
             <thead>
                 <tr id>
-                    <th>編號</th>
-                    <th>員工名稱</th>
-                    <th>職稱</th>
-                    <th>任職日期</th>
-                    <th>性別</th>
-                    <th>年齡</th>
+                    <th></th>
+                    <th>圖書類別</th>
+                    <th>書名</th>
+                    <th>購書日期</th>
+                    <th>借閱狀態</th>
+                    <th>借閱人</th>
+                    <td></td>
                     <td></td>
                     <td></td>
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in (List<workshop.Models.BookSearch>)ViewBag.SearchResult)
+                @*
+                @foreach (var item in (List<workshop.Models.Books>)ViewBag.SearchResult)
                 {
-                    <tr id='@item.BookName'>
-                        <td>@item.EmployeeId</td>
-                        <td>@item.EmployeeFirstName  @item.EmployeeLastName</td>
-                        <td>@item.JobTitleId - @item.JobTitle</td>
-                        <td>@item.HireDate.Replace('-', '/')</td>
-                        <td>@item.Gender</td>
-                        <td>@item.Age</td>
-                        <td>@Html.ActionLink("修改", "UpdateEmployee", new { id = item.EmployeeId, @value = @item.EmployeeId })</td>
+                    <tr id='@item.BookId'>
+                        <td>@item.BookCategory</td>
+                        <td>@item.BookName</td>
+                        <td>@item.BoughtDate</td>
+                        <td>@item.BookStatus</td>
+                        <td>@item.LendName</td>
+                        <td>@Html.ActionLink("修改", "UpdateEmployee", new { id = item.BookId, @value = @item.BookId })</td>
                         <td>
-                            <a class="btnDelete" href="#" onclick="test(this,'@item.EmployeeId');">刪除</a>
-                            <input class="hidEmployeeId" type="hidden" value='@item.EmployeeId' />
+                            <a class="btnDelete" href="#" onclick="test(this,'@item.BookId');">刪除</a>
+                            <input class="hidEmployeeId" type="hidden" value='@item.BookId' />
                         </td>
+                        <td></td>
                     </tr>
                 }
+                *@
             </tbody>
         </table>
     }

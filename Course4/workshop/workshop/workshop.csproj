@@ -126,6 +126,7 @@
     </Compile>
     <Compile Include="Models\Books.cs" />
     <Compile Include="Models\BookSearch.cs" />
+    <Compile Include="Models\BookService.cs" />
     <Compile Include="Models\Service.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

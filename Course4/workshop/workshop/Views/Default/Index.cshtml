@@ -7,7 +7,7 @@
 <h2>書籍查詢</h2>
 
 
-@using (Html.BeginForm("Index", "Employee", FormMethod.Post, new { id = "Form1" }))
+@using (Html.BeginForm("Index", "Default", FormMethod.Post, new { id = "Form1" }))
 {
 <div class="form-horizontal">
 
@@ -45,7 +45,7 @@
         </div>
         <div class="col-md-10">
             <input type="submit" value="查詢" />
-            @Html.ActionLink("add", "InsertEmployee")
+            @Html.ActionLink("add", "InsertBook")
             @Html.ActionLink("清除", "Index")
         </div>
     </div>
@@ -54,7 +54,7 @@
     {
         <table class="table table-bordered table-striped">
             <thead>
-                <tr id>
+                <tr id="search_table">
                     <th></th>
                     <th>圖書類別</th>
                     <th>書名</th>

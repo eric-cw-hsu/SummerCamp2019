@@ -96,7 +96,7 @@ namespace workshop.Controllers
         {
             BookService.UpdateBookData(arg);
 
-            return View("Index");
+            return View("UpdateBook");
         }
     }
 

@@ -57,7 +57,7 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.BookClassName, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.DropDownListFor(model => model.BookClassName, (List<SelectListItem>)ViewBag.BookClassName, "請選擇", new { @class = "form-control", id = "BookClassId", @Value = ViewBag.OriginResult.BookClassName })
+                    @Html.DropDownListFor(model => model.BookClassName, (List<SelectListItem>)ViewBag.BookClassName, new { @class = "form-control", id = "BookClassId", @Value = ViewBag.OriginResult.BookClassName })
                     @Html.ValidationMessageFor(model => model.BookClassName, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -65,7 +65,7 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.BookCodeName, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.DropDownListFor(model => model.BookCodeName, (List<SelectListItem>)ViewBag.BookCodeName, "請選擇", new { @class = "form-control", id = "BookClassId", @Value = ViewBag.OriginResult.BookCodeName })
+                    @Html.DropDownListFor(model => model.BookCodeName, (List<SelectListItem>)ViewBag.BookCodeName, new { @class = "form-control", id = "BookClassId", @Value = ViewBag.OriginResult.BookCodeName })
                     @Html.ValidationMessageFor(model => model.BookCodeName, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -84,6 +84,7 @@
                     <input type="submit" id="UpdateBtn" value="存檔" class="btn btn-default" />
                     <input class="hidBookId" id="HidBookId" type="hidden" value="@ViewBag.OriginResult.BookId" />
                     <input class="hidData" id="HidData" type="hidden" value="@ViewBag.OriginResult" />
+                    @Html.TextBoxFor(model => model.BookId, new { @class = "hidBookId", type = "hidden", @Value = ViewBag.OriginResult.BookId })
                 </div>
             </div>
         </div>

@@ -45,9 +45,8 @@
         </div>
         <div class="col-md-10">
             <input class="btn btn-default" type="submit" value="查詢" />
-            <button class="btn btn-default" type="button">@Html.ActionLink("清除", "Index")</button>
-            <button class="btn btn-default" type="button">@Html.ActionLink("新增", "InsertBook")</button>
-
+            <input class="btn btn-default" style="width:55px;" id="DeleteBtn" value="清除" />
+            <input class="btn btn-default" style="width:55px;" id="InsertBtn" value="新增" />
         </div>
     </div>
 
@@ -119,6 +118,14 @@
                 });
             }
             return false;
+        });
+
+        $("#DeleteBtn").click(function (e) {
+            location = "/Library/Index";
+        });
+
+        $("#InsertBtn").click(function (e) {
+            location = "/Library/InsertBook";
         });
     });
 </script>

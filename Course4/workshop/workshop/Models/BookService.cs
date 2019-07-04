@@ -40,7 +40,7 @@ namespace workshop.Models
                             INNER JOIN BOOK_CODE AS BCD
                             ON (BD.BOOK_STATUS = BCD.CODE_ID AND BCD.CODE_TYPE = 'BOOK_STATUS')
 
-                            WHERE (BD.BOOK_NAME = @BookName OR @BookName = '') AND
+                            WHERE (BD.BOOK_NAME LIKE '%'+@BookName+'%' OR @BookName = '') AND
                                     (BC.BOOK_CLASS_ID = @BookCategory OR @BookCategory = '') AND
                                     (USER_ID = @LendName OR @LendName = '') AND
                                     (CODE_ID = @BookStatus OR @BookStatus = '')
@@ -101,6 +101,7 @@ namespace workshop.Models
         {
             try
             {
+                DataTable dt = new DataTable();
                 string sql = "Delete FROM BOOK_DATA " +
                     "         Where BOOK_ID = @BookId";
                 using (SqlConnection conn = new SqlConnection(this.GetDBConnectionString()))
@@ -108,7 +109,9 @@ namespace workshop.Models
                     conn.Open();
                     SqlCommand cmd = new SqlCommand(sql, conn);
                     cmd.Parameters.Add(new SqlParameter("@BookId", BookId));
-                    cmd.ExecuteNonQuery();
+                    SqlDataAdapter sqlAdapter = new SqlDataAdapter(cmd);
+                    sqlAdapter.Fill(dt);
+                    //cmd.ExecuteNonQuery();
                     conn.Close();
                 }
             }
@@ -118,13 +121,14 @@ namespace workshop.Models
             }
         }
 
+
         /// <summary>
         /// Map資料進List
         /// </summary>
         /// <param name="BookData"></param> ??
         /// <returns></returns>
         private List<Models.Books> MapBookDataToList(DataTable BookData)
-        {   
+        {
             List<Models.Books> result = new List<Books>();
             foreach (DataRow row in BookData.Rows)
             {
@@ -138,6 +142,88 @@ namespace workshop.Models
                     BookCategory = row["BOOK_CLASS_NAME"].ToString(),
                 });
             }
+            return result;
+        }
+
+        /// UPDATE
+
+        /// <summary>
+        /// Upload 資料
+        /// </summary>
+        public void UpdateBookData(Models.Books arg)
+        {
+            DataTable dt = new DataTable();
+            string sql = @"UPDATE BOOK_DATA
+                            SELECT BOOK_NAME = @BookName,
+                                    BOOK_AUTHOR = @BookAuthor,
+                                    BOOK_PUBLISHER = @BookPublisher,
+                                    BOOK_NOTE = @BookNote,
+                                    BOOK_BOUGHT_DATE = @BookBoughtDate,
+                                    BOOK_CLASS_ID = @BookClassId
+                            WHERE BOOK_ID = @BookId";
+            using (SqlConnection conn = new SqlConnection(this.GetDBConnectionString()))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                SqlDataAdapter sqlAdapter = new SqlDataAdapter(cmd);
+                cmd.Parameters.Add(new SqlParameter("@BookName", arg.BookName.ToString()));
+                cmd.Parameters.Add(new SqlParameter("@BookAuthor", arg.BookAuthor.ToString()));
+                cmd.Parameters.Add(new SqlParameter("@BookPublisher", arg.BookPublisher.ToString()));
+                cmd.Parameters.Add(new SqlParameter("@BookNote", arg.BookNote.ToString()));
+                cmd.Parameters.Add(new SqlParameter("@BookBoughtDate", arg.BookBoughtDate.ToString()));
+                cmd.Parameters.Add(new SqlParameter("@BookClassId", arg.BookClassId.ToString()));
+                cmd.Parameters.Add(new SqlParameter("@BookId", Convert.ToInt32(arg.BookId)));
+                sqlAdapter.Fill(dt);
+                conn.Close();
+            }
+        }
+
+
+        ///Edit
+        /// <summary>
+        /// Get Origin data
+        /// </summary>
+        public Models.Books GetOriginData(int BookId)
+        {
+            DataTable dt = new DataTable();
+            string sql = @"SELECT BOOK_ID, BOOK_NAME, BOOK_AUTHOR, BOOK_PUBLISHER, BOOK_NOTE, BOOK_BOUGHT_DATE,
+                                    BOOK_CLASS_NAME, BOOK_STATUS, CODE_NAME, (USER_ENAME + '-' + USER_CNAME) AS USER_NAME
+                            FROM BOOK_DATA AS BD
+                            INNER JOIN BOOK_CLASS AS BC
+                            ON BD.BOOK_CLASS_ID = BC.BOOK_CLASS_ID
+                            INNER JOIN BOOK_CODE AS BCD
+                            ON BD.BOOK_STATUS = BCD.CODE_ID
+                            INNER JOIN MEMBER_M AS MM
+                            ON BD.BOOK_KEEPER = MM.USER_ID
+                            WHERE BOOK_ID = @BookId";
+
+            using (SqlConnection conn = new SqlConnection(this.GetDBConnectionString()))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                SqlDataAdapter sqlAdapter = new SqlDataAdapter(cmd);
+                cmd.Parameters.Add(new SqlParameter("@BookId", Convert.ToInt32(BookId)));
+                sqlAdapter.Fill(dt);
+                conn.Close();
+            }
+
+            return this.MapOriginData(dt);
+        }
+
+        private Models.Books MapOriginData(DataTable dt)
+        {
+            Models.Books result = new Models.Books();
+
+            result.BookId = Convert.ToInt32(dt.Rows[0]["BOOK_ID"]);
+            result.BookName = dt.Rows[0]["BOOK_NAME"].ToString();
+            result.BookAuthor = dt.Rows[0]["BOOK_AUTHOR"].ToString();
+            result.BookPublisher = dt.Rows[0]["BOOK_PUBLISHER"].ToString();
+            result.BookNote = dt.Rows[0]["BOOK_NOTE"].ToString();
+            result.BookBoughtDate = dt.Rows[0]["BOOK_BOUGHT_DATE"].ToString();
+            result.BookClassName = dt.Rows[0]["BOOK_CLASS_NAME"].ToString();
+            result.BookStatus= dt.Rows[0]["BOOK_STATUS"].ToString();
+            result.BookCodeName = dt.Rows[0]["CODE_NAME"].ToString();
+            result.UserName = dt.Rows[0]["USER_NAME"].ToString();
             return result;
         }
     }

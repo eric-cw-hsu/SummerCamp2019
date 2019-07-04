@@ -75,6 +75,43 @@ namespace workshop.Models
         [DisplayName("類別代號")]
         [Required(ErrorMessage = "此欄位必填")]
         public string BookClassId { get; set; }
+
+        /// <summary>
+        /// 任職日期
+        /// </summary>
+        [DisplayName("類別名稱")]
+        [Required(ErrorMessage = "此欄位必填")]
+        public string BookClassName { get; set; }
+
+
+        /// <summary>
+        /// 任職日期
+        /// </summary>
+        [DisplayName("狀態名稱")]
+        [Required(ErrorMessage = "此欄位必填")]
+        public string BookCodeName { get; set; }
+
+
+        /// <summary>
+        /// 任職日期
+        /// </summary>
+        [DisplayName("英文姓名")]
+        [Required(ErrorMessage = "此欄位必填")]
+        public string UserEName { get; set; }
+
+        /// <summary>
+        /// 任職日期
+        /// </summary>
+        [DisplayName("中文姓名")]
+        [Required(ErrorMessage = "此欄位必填")]
+        public string UserCName { get; set; }
+
+        /// <summary>
+        /// 任職日期
+        /// </summary>
+        [DisplayName("借閱人")]
+        [Required(ErrorMessage = "此欄位必填")]
+        public string UserName { get; set; }
     }
     
 }

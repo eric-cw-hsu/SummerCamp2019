@@ -9,6 +9,7 @@ namespace workshop.Controllers
     public class LibraryController : Controller
     {
         Models.Service Service = new Models.Service();
+        Models.BookService BookService = new Models.BookService();
 
         // GET: Default
         public ActionResult Index()
@@ -66,7 +67,7 @@ namespace workshop.Controllers
         /// <param name="employeeId"></param>
         /// <returns></returns>
         [HttpPost()]
-        public JsonResult DeleteEmployee(string BookId)
+        public JsonResult DeleteBook(string BookId)
         {
             try
             {
@@ -79,6 +80,23 @@ namespace workshop.Controllers
             {
                 return this.Json(false);
             }
+        }
+
+        [HttpPost()]
+        public ActionResult EditBook(int BookId)
+        {
+            ViewBag.OriginResult = this.BookService.GetOriginData(BookId);
+            ViewBag.BookClassName = this.Service.GetTable("BOOK_CLASS", "BOOK_CLASS_NAME", "BOOK_CLASS_ID");
+            ViewBag.BookCodeName = this.Service.GetCodeTable("BOOK_STATUS");
+            return View("EditBook");
+        }
+
+        [HttpPost()]
+        public ActionResult UpdateBook(Models.Books arg)
+        {
+            BookService.UpdateBookData(arg);
+
+            return View("Index");
         }
     }
 

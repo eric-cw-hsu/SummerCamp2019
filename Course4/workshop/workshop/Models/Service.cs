@@ -22,7 +22,7 @@ namespace workshop.Models
 
         /// <summary>
         /// 取得書籍資料
-        /// </summary>
+        /// </summary> 
         /// <return></return>
         public List<SelectListItem> GetBook(string BookId)
         {
@@ -55,7 +55,8 @@ namespace workshop.Models
                 result.Add(new SelectListItem()
                 {
                     Text = row["CODE_NAME"].ToString(),
-                    Value = row["CODE_ID"].ToString()
+                    Value = row["CODE_ID"].ToString(),
+                    Selected = true
                 });
             }
             return result;

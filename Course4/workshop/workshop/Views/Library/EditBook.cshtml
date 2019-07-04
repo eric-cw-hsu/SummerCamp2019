@@ -1,0 +1,135 @@
+﻿@model workshop.Models.Books
+
+@{
+    ViewBag.Title = "EditBook";
+}
+
+<h2>EditBook</h2>
+
+@if (ViewBag.OriginResult != null)
+{
+    using (Html.BeginForm())
+    {
+<div class="form-horizontal">
+    <h4>Books</h4>
+    <hr />
+    <div class="form-group">
+        @Html.LabelFor(model => model.BookName, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.BookName, new { @class = "form-control", id = "BookName", @Value = ViewBag.OriginResult.BookName })
+            @Html.ValidationMessageFor(model => model.BookName, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.BookAuthor, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.BookAuthor, new { @class = "form-control", id = "BookAuthor", @Value = ViewBag.OriginResult.BookAuthor })
+            @Html.ValidationMessageFor(model => model.BookAuthor, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.BookPublisher, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.BookPublisher, new { @class = "form-control", id = "BookPublisher", @Value = ViewBag.OriginResult.BookPublisher })
+            @Html.ValidationMessageFor(model => model.BookPublisher, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.BookNote, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.BookNote, new { @class = "form-control", id = "BookName", @Value = ViewBag.OriginResult.BookNote })
+            @Html.ValidationMessageFor(model => model.BookNote, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.BookBoughtDate, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.BookBoughtDate, new { @class = "form-control", @type = "Date", id = "BookBoughtDate", @Value = ViewBag.OriginResult.BookBoughtDate })
+            @Html.ValidationMessageFor(model => model.BookBoughtDate, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.BookClassName, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.BookClassName, (List<SelectListItem>)ViewBag.BookClassName, "請選擇", new { @class = "form-control", id = "BookClassId", @Value = ViewBag.OriginResult.BookClassName })
+            @Html.ValidationMessageFor(model => model.BookClassName, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.BookCodeName, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.BookCodeName, (List<SelectListItem>)ViewBag.BookCodeName, "請選擇", new { @class = "form-control", id = "BookClassId", @Value = ViewBag.OriginResult.BookCodeName })
+            @Html.ValidationMessageFor(model => model.BookCodeName, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.UserName, new { @class = "form-control", id = "BookClassID", @Value = ViewBag.OriginResult.UserName })
+            @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="button" id="DeleteBtn" value="刪除" class="btn btn-default" />
+            <input type="button" id="UpdateBtn" value="存檔" class="btn btn-default" />
+            <input class="hidBookId" id="HidBookId" type="hidden" value="@ViewBag.OriginResult.BookId" />
+            <input class="hidData" id="HidData" type="hidden" value="@ViewBag.OriginResult" />
+        </div>
+    </div>
+</div>
+    }
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#DeleteBtn").click(function (e) {
+            if (confirm("確定刪除?")) {
+                e.preventDefault();
+                $.ajax({
+                    type: "POST",
+                    url: "/Library/DeleteBook",
+                    data: "BookId=" + $("#HidBookId").val(),
+                    dataType: "json",
+                    success: function (response) {
+
+                    }, error: function (error) {
+                        alert("系統發生錯誤");
+                    }
+                });
+            }
+            return false;
+        });
+
+        $("#UpdateBtn").click(function (e) {
+            if (confirm("確定儲存?")) {
+                e.preventDefault();
+                $.ajax({
+                    type: "POST",
+                    url: "/Library/UpdateBook",
+                    data: "BookId=" + $("#HidBookId").val(),
+                    dataType: "json",
+                    success: function (response) {
+
+                    }, error: function (error) {
+                        alert("系統發生錯誤");
+                    }
+                });
+            }
+            return false;
+        });
+    });
+</script>

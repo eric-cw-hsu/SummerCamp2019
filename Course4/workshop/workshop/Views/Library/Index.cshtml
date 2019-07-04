@@ -44,9 +44,10 @@
         <div class="col-md-2">
         </div>
         <div class="col-md-10">
-            <input type="submit" value="查詢" />
-            @Html.ActionLink("add", "InsertBook")
-            @Html.ActionLink("清除", "Index")
+            <input class="btn btn-default" type="submit" value="查詢" />
+            <button class="btn btn-default" type="button">@Html.ActionLink("清除", "Index")</button>
+            <button class="btn btn-default" type="button">@Html.ActionLink("新增", "InsertBook")</button>
+
         </div>
     </div>
 
@@ -75,10 +76,18 @@
                         <td>@item.BookBoughtDate</td>
                         <td>@item.BookStatus</td>
                         <td>@item.LendName</td>
-                        <td>借閱紀錄</td>
-                        <td>@Html.ActionLink("編輯", "UpdateBook", new { id = item.BookId, @value = @item.BookId })</td>
                         <td>
-                            <a class="btnDelete" href="#" onclick="test(this,'@item.BookId');">刪除</a>
+                            <Button class="btn btn-default" type="button">借閱紀錄</Button>
+                        </td>
+                        <td>
+                            @using (Html.BeginForm("EditBook", "Library", FormMethod.Post, new { id = "EditBook" }))
+                            {
+                                <input type="hidden" id="BookId" name="BookId" value="@item.BookId" />
+                                <button class="EditBook btn btn-default">編輯</button>
+                            }
+                        </td>
+                        <td>
+                            <button class="btnDelete btn btn-default" href="#" >刪除</button>
                             <input class="hidBookId" type="hidden" value='@item.BookId' />
                         </td>
                     </tr>
@@ -90,4 +99,26 @@
 
 </div>
 
-}
+  //Delete click event
+}<script type="text/javascript">
+    $(document).ready(function () {
+        $(".btnDelete").click(function (e) {
+            if (confirm("確定刪除?")) {
+                e.preventDefault();
+                var tr = $(this).closest('tr')
+                $.ajax({
+                    type: "POST",
+                    url: "/Library/DeleteBook",
+                    data: "BookId=" + $(this).next().val(),
+                    dataType: "json",
+                    success: function (response) {
+                        $(tr).remove();
+                    }, error: function (error) {
+                        alert("系統發生錯誤");
+                    }
+                });
+            }
+            return false;
+        });
+    });
+</script>

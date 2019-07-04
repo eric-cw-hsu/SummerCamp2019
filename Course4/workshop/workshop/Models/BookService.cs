@@ -186,7 +186,8 @@ namespace workshop.Models
         public Models.Books GetOriginData(int BookId)
         {
             DataTable dt = new DataTable();
-            string sql = @"SELECT BOOK_ID, BOOK_NAME, BOOK_AUTHOR, BOOK_PUBLISHER, BOOK_NOTE, BOOK_BOUGHT_DATE,
+            string sql = @"SELECT BOOK_ID, BOOK_NAME, BOOK_AUTHOR, BOOK_PUBLISHER, BOOK_NOTE,
+                                    FORMAT(BOOK_BOUGHT_DATE, 'yyyy-MM-dd') AS BOOK_BOUGHT_DATE,
                                     BOOK_CLASS_NAME, BOOK_STATUS, CODE_NAME, (USER_ENAME + '-' + USER_CNAME) AS USER_NAME
                             FROM BOOK_DATA AS BD
                             LEFT JOIN MEMBER_M AS MM

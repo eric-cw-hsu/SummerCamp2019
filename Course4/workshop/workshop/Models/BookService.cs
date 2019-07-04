@@ -170,8 +170,8 @@ namespace workshop.Models
                 cmd.Parameters.Add(new SqlParameter("@BookAuthor", arg.BookAuthor.ToString()));
                 cmd.Parameters.Add(new SqlParameter("@BookPublisher", arg.BookPublisher.ToString()));
                 cmd.Parameters.Add(new SqlParameter("@BookNote", arg.BookNote.ToString()));
-                cmd.Parameters.Add(new SqlParameter("@BookBoughtDate", arg.BookBoughtDate.ToString()));
-                cmd.Parameters.Add(new SqlParameter("@BookClassId", arg.BookClassId.ToString()));
+                cmd.Parameters.Add(new SqlParameter("@BookBoughtDate", arg.BookBoughtDate == null ? "" : arg.BookBoughtDate.ToString()));
+                cmd.Parameters.Add(new SqlParameter("@BookClassId", arg.BookClassId == null ? "" : arg.BookClassId.ToString()));
                 cmd.Parameters.Add(new SqlParameter("@BookId", Convert.ToInt32(arg.BookId)));
                 sqlAdapter.Fill(dt);
                 conn.Close();

@@ -76,7 +76,11 @@
                         <td>@item.BookStatus</td>
                         <td>@item.LendName</td>
                         <td>
-                            <Button class="btn btn-default" type="button">借閱紀錄</Button>
+                            @using (Html.BeginForm("Record", "Library", FormMethod.Post, new { id = "Record" }))
+                            {
+                                <input type="hidden" id="UserId" name="UserId" value="@item.UserId" />
+                                <Button class="btn btn-default" id="RecordBtn">借閱紀錄</Button>
+                            }
                         </td>
                         <td>
                             @using (Html.BeginForm("EditBook", "Library", FormMethod.Post, new { id = "EditBook" }))
@@ -126,6 +130,9 @@
 
         $("#InsertBtn").click(function (e) {
             location = "/Library/InsertBook";
+        });
+        $("#RecordBtn").click(function (e) {
+            
         });
     });
 </script>

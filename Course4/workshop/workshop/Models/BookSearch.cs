@@ -19,5 +19,7 @@ namespace workshop.Models
         public string LendName { get; set; }
         [DisplayName("借閱狀態")]
         public string BookStatus { get; set; }
+        [DisplayName("使用者編號")]
+        public int UserID { get; set; }
     }
 }

@@ -98,6 +98,13 @@ namespace workshop.Controllers
 
             return View("UpdateBook");
         }
+
+        [HttpPost()]
+        public ActionResult Record(int UserId)
+        {
+            ViewBag.RecordResult = Service.GetRecordTable(UserId);
+            return View("Record");
+        }
     }
 
    

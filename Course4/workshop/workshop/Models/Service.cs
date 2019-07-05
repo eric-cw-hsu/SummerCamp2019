@@ -114,6 +114,43 @@ namespace workshop.Models
             }
             return result;
         }
+
+        public List<Models.Record> GetRecordTable(int UserId)
+        {
+            DataTable dt = new DataTable();
+            string sql = @"SELECT FORMAT(LEND_DATE, 'yyyy-MM-dd') AS LEND_DATE, [USER_ID], USER_ENAME, USER_CNAME
+                                    FROM BOOK_DATA AS BD
+                                    INNER JOIN BOOK_LEND_RECORD AS BLR
+                                    ON BD.BOOK_ID = BLR.BOOK_ID
+                                    INNER JOIN MEMBER_M AS MM
+                                    ON BLR.KEEPER_ID = MM.[USER_ID]
+                                    WHERE BD.BOOK_ID = @UserId
+                                    ORDER BY LEND_DATE DESC";
+
+            using (SqlConnection conn = new SqlConnection(this.GetDBConnectionString()))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.Add(new SqlParameter("@UserId", UserId));
+                SqlDataAdapter sqlAdapter = new SqlDataAdapter(cmd);
+                sqlAdapter.Fill(dt);
+                conn.Close();
+            }
+
+            List<Models.Record> result = new List<Record>();
+            foreach (DataRow row in dt.Rows)
+            {
+                result.Add(new Record()
+                {
+                    LendDate = row["LendDate"].ToString(),
+                    UserId = Convert.ToInt32(row["UserId"]),
+                    UserEName = row["UserEName"].ToString(),
+                    UserCName = row["UserCName"].ToString()
+                });
+            }
+
+            return result;
+        }
     }
 
 

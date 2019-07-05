@@ -28,7 +28,7 @@ namespace workshop.Models
 
             DataTable dt = new DataTable();
             string sql = @"SELECT BD.BOOK_ID, BOOK_NAME, CODE_NAME, USER_ENAME, BOOK_CLASS_NAME, 
-                            FORMAT(BOOK_BOUGHT_DATE, 'yyyy/MM/dd') AS BOOK_BOUGHT_DATE
+                            FORMAT(BOOK_BOUGHT_DATE, 'yyyy/MM/dd') AS BOOK_BOUGHT_DATE, USER_ID
                             FROM BOOK_DATA AS BD   
 
                             LEFT JOIN MEMBER_M AS MM
@@ -86,7 +86,7 @@ namespace workshop.Models
                 cmd.Parameters.Add(new SqlParameter("@BookAuthor", Book.BookAuthor));
                 cmd.Parameters.Add(new SqlParameter("@BookPublisher", Book.BookPublisher));
                 cmd.Parameters.Add(new SqlParameter("@BookNote", Book.BookNote));
-                cmd.Parameters.Add(new SqlParameter("@  BookBoughtDate", Book.BookBoughtDate));
+                cmd.Parameters.Add(new SqlParameter("@BookBoughtDate", Book.BookBoughtDate));
                 cmd.Parameters.Add(new SqlParameter("@BookClassId", Book.BookClassId == null ? (Object)DBNull.Value : Book.BookClassId));
                 BookId = Convert.ToInt32(cmd.ExecuteScalar());
                 conn.Close();

@@ -127,6 +127,7 @@
     <Compile Include="Models\Books.cs" />
     <Compile Include="Models\BookSearch.cs" />
     <Compile Include="Models\BookService.cs" />
+    <Compile Include="Models\Record.cs" />
     <Compile Include="Models\Service.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -166,6 +167,7 @@
     <Content Include="Views\Library\InsertBook.cshtml" />
     <Content Include="Views\Library\UpdateBook.cshtml" />
     <Content Include="Views\Library\EditBook.cshtml" />
+    <Content Include="Views\Library\Record.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

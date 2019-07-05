@@ -1,0 +1,28 @@
+﻿
+@{
+    ViewBag.Title = "Record";
+}
+
+<h2>查詢紀錄</h2>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr id="search_table">
+            <th>借閱日期</th>
+            <th>借閱人員編號</th>
+            <th>英文姓名</th>
+            <th>中文姓名</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in (List<workshop.Models.Record>)ViewBag.RecordResult)
+        {
+            <tr id='@item.UserId'>
+                <td>@item.LendDate</td>
+                <td>@item.UserId</td>
+                <td>@item.UserEName</td>
+                <td>@item.UserCName</td>
+            </tr>
+        }
+    </tbody>
+</table>

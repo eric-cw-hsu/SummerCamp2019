@@ -10,7 +10,6 @@ namespace workshop.Models
     public class Books
     {
         [DisplayName("書籍編號")]
-        [Required(ErrorMessage = "此欄位必填")]
         public int BookId { get; set; }
 
         [DisplayName("書籍名稱")]
@@ -48,24 +47,25 @@ namespace workshop.Models
         public string BookClassId { get; set; }
 
         [DisplayName("類別名稱")]
-        [Required(ErrorMessage = "此欄位必填")]
         public string BookClassName { get; set; }
 
         [DisplayName("狀態名稱")]
-        [Required(ErrorMessage = "此欄位必填")]
         public string BookCodeName { get; set; }
 
         [DisplayName("英文姓名")]
-        [Required(ErrorMessage = "此欄位必填")]
         public string UserEName { get; set; }
 
         [DisplayName("中文姓名")]
-        [Required(ErrorMessage = "此欄位必填")]
         public string UserCName { get; set; }
+        
+        [DisplayName("借閱人")]
+        public string UserName { get; set; }
 
         [DisplayName("借閱人")]
-        [Required(ErrorMessage = "此欄位必填")]
-        public string UserName { get; set; }
+        public string LendDate { get; set; }
+
+        [DisplayName("借閱人")]
+        public int UserId { get; set; }
     }
     
 }

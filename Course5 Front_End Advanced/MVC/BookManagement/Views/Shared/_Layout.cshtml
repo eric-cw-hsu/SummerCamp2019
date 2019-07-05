@@ -7,15 +7,21 @@
     <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/UserStyle.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="~/css/kendo.common-material.min.css">
+    <link rel="stylesheet" href="~/css/kendo.material.min.css">
+    <link rel="stylesheet" href="~/css/uikit.min.css">
     <script src="~/Scripts/modernizr-2.6.2.js"></script>
     <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/kendo.all.min.js"></script>
 </head>
+
 <style type="text/css">
     body {
         font-family: 微软雅黑
     }
 </style>
 <body>
+    <script src="~/Scripts/kendo.all.min.js"></script>
     <div class="navbar navbar-inverse navbar-fixed-top" style="background-color: #99b2db ; border-color: #99b2db">
         <div class="container">
             <div class="navbar-header">
@@ -24,7 +30,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("圖書維護系統", "Index", "Book", new { area = "" } ,new { @class = "navbar-brand" })
+                @Html.ActionLink("圖書維護系統", "Index", "Book", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav"></ul>
@@ -36,10 +42,13 @@
         @RenderBody()
         @*<hr />*@
         @*<footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>*@
+                <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            </footer>*@
     </div>
 
     <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/jquery-1.10.2.js"></script>
+    <script src="~/Scripts/kendo.all.min.js"></script>
 </body>
 </html>

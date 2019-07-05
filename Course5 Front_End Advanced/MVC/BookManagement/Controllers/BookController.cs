@@ -7,6 +7,29 @@ using System.Web;
 
 namespace BookManagement.Controllers
 {
+    public class IndexController : Controller
+    {
+        public ActionResult Index()
+        {
+            return View();
+        }
+
+        [HttpPost()]
+        public JsonResult GetTestData(string testString)
+        {
+            return Json(testString + " call ajax success!!");
+        }
+
+        [HttpPost()]
+        public JsonResult GetDropDownListData()
+        {
+            List<string> tempData = new List<string>();
+            tempData.Add("項目一");
+            tempData.Add("項目一");
+
+            return Json(tempData);
+        }
+    }
     public class BookController : Controller
     {
         readonly Models.CodeService codeService = new Models.CodeService();

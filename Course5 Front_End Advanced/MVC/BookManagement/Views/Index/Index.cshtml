@@ -1,10 +1,104 @@
-﻿
-@{ 
+﻿@model BookManagement.Models.BookSearchArg
+@{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2 id="demo_result">Index</h2>
+<h2 style="font-family:Microsoft JhengHei;">圖書維護</h2>
 
-<input id="demo_input" type="text" name="name" value=""/>
+<table class="table table-bordered table-hover">
+    <tr>
+        <td>書名</td>
+        <td><input /></td>
+    </tr>
+    <tr>
+        <td>圖書類別</td>
+        <td>
+            <select id="Book"></select>
+        </td>
+    </tr>
+    <tr>
+        <td>借閱人</td>
+        <td>
+            <select id="Book"></select>
+        </td>
+    </tr>
+    <tr>
+        <td>借閱狀態</td>
+        <td>
+            <select id="Book"></select>
+        </td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>
+            <button id="SearchBtn">查詢</button>
+            <button id="ClearBtn">清除</button>
+            <button id="InsertBtn">新增</button>
+        </td>
+    </tr>
+</table>
+
+<div id="book_grid"></div>
+
+<script>
+    $(document).ready(function () {
+        $("#ClearBtn").click(function () {
+            location = "/Index/Index";
+        })
+
+        $("#InsertBtn").click(function () {
+            location = "/Index/InsertBook"
+        })
+
+        $("#SearchBtn").click(function () {
+
+        })
+        /*
+        $("#book_category").kendoDropDownList({
+            dataTextField: "text",
+            dataValueField: "value",
+            dataSource: data,
+            index: 0,
+            change: onChange
+        });
+        */
+        $("#book_grid").kendoGrid({
+            dataSource: {
+                //data: bookDataFromLocalStorage,
+                schema: {
+                    model: {
+                        fields: {
+                            BookId: { type: "int" },
+                            BookName: { type: "string" },
+                            BookCategory: { type: "string" },
+                            BookAuthor: { type: "string" },
+                            BookBoughtDate: { type: "string" },
+                            BookPublisher: { type: "string" }
+                        }
+                    }
+                },
+                pageSize: 20,
+            },
+            toolbar: kendo.template("<div class='book-grid-toolbar'><input class='book-grid-search' placeholder='我想要找......' type='text'></input></div>"),
+            height: 550,
+            sortable: true,
+            pageable: {
+                input: true,
+                numeric: false
+            },
+            columns: [
+                { field: "BookId", title: "書籍編號", width: "9%" },
+                { field: "BookName", title: "書籍名稱", width: "39%" },
+                { field: "BookCategory", title: "書籍種類", width: "10%" },
+                { field: "BookAuthor", title: "作者", width: "15%" },
+                { field: "BookBoughtDate", title: "購買日期", width: "12%" },
+                { field: "BookPublisher", title: "出版社", width: "15%" },
+                { command: { text: "刪除", /*click: deleteBook*/ }, title: " ", width: "120px" }
+            ]
+
+        });
+    });
+
     
+</script>

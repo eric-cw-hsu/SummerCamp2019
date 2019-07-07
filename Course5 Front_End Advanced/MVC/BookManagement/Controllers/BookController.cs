@@ -9,18 +9,41 @@ namespace BookManagement.Controllers
 {
     public class LibraryController : Controller
     {
+        Models.CodeService CodeService = new Models.CodeService();
+        Models.BookService BookService = new Models.BookService();
         public ActionResult Index()
         {
             return View();
         }
 
+        ///GetBookByCondition
+        [HttpPost()]
+        public JsonResult GetBookData()
+        {
+            Models.BookSearchArg arg = new Models.BookSearchArg();
+            return Json(BookService.GetBookByCondition(arg));
+        }
+
         /// GetDropDownList
         [HttpPost()]
-        public JsonResult GetDropDownList()
+        public JsonResult GetClass()
         {
-            return
+            return Json(this.CodeService.GetBookClassName()); 
+        }
+        /// GetDropDownList
+        [HttpPost()]
+        public JsonResult GetUserName()
+        {
+            return Json(this.CodeService.GetUserName());
+        }
+        /// GetDropDownList
+        [HttpPost()]
+        public JsonResult GetStatus()
+        {
+            return Json(this.CodeService.GetCodeName());
         }
     }
+    
     public class BookController : Controller
     {
         readonly Models.CodeService codeService = new Models.CodeService();
@@ -50,7 +73,7 @@ namespace BookManagement.Controllers
             ViewBag.UserNameData = this.codeService.GetUserName();
             ViewBag.BookClassNameData = this.codeService.GetBookClassName();
             ViewBag.CodeNameData = this.codeService.GetCodeName();
-            ViewBag.SearchResult = bookService.GetBookByCondtioin(arg);
+            ViewBag.SearchResult = bookService.GetBookByCondition(arg);
             return View("Index");
         }
 

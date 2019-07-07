@@ -23,7 +23,7 @@ namespace BookManagement.Models
         /// 依照條件取得圖書資料
         /// </summary>
         /// <returns></returns>
-        public List<Models.Books> GetBookByCondtioin(Models.BookSearchArg arg)
+        public List<Models.Books> GetBookByCondition(Models.BookSearchArg arg)
         {
 
             DataTable dt = new DataTable();

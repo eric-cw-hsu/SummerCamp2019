@@ -95,6 +95,11 @@ namespace BookManagement.Models
         private List<SelectListItem> MapCodeName(DataTable dt)
         {
             List<SelectListItem> result = new List<SelectListItem>();
+            result.Add(new SelectListItem()
+            {
+                Text = "請選擇",
+                Value = ""
+            });
             foreach (DataRow row in dt.Rows)
             {
                 result.Add(new SelectListItem()

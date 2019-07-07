@@ -9,24 +9,26 @@
 <table class="table table-bordered table-hover">
     <tr>
         <td>書名</td>
-        <td><input /></td>
+        <td>
+            <input id="BookName" />
+        </td>
     </tr>
     <tr>
         <td>圖書類別</td>
         <td>
-            <select id="Book"></select>
+            <select id="BookClass"></select>
         </td>
     </tr>
     <tr>
         <td>借閱人</td>
         <td>
-            <select id="Book"></select>
+            <select id="BookLendUser"></select>
         </td>
     </tr>
     <tr>
         <td>借閱狀態</td>
         <td>
-            <select id="Book"></select>
+            <select id="BookStatus"></select>
         </td>
     </tr>
     <tr>
@@ -43,12 +45,27 @@
 
 <script>
     $(document).ready(function () {
+        $("#BookClass".kendoDropDownList({
+            dataTextField: "text",
+            dataValueField: "value",
+            dataSource: {
+                transport: {
+                    read: {
+                        method: "post",
+                        dataType: "Json",
+                        url: "GetClass"
+                    }
+                }
+            },
+            index: 0
+        });
+
         $("#ClearBtn").click(function () {
-            location = "/Index/Index";
+            location = "/Library/Index";
         })
 
         $("#InsertBtn").click(function () {
-            location = "/Index/InsertBook"
+            location = "/Library/InsertBook"
         })
 
         $("#SearchBtn").click(function () {
@@ -80,7 +97,7 @@
                 },
                 pageSize: 20,
             },
-            toolbar: kendo.template("<div class='book-grid-toolbar'><input class='book-grid-search' placeholder='我想要找......' type='text'></input></div>"),
+            //toolbar: kendo.template("<div class='book-grid-toolbar'><input class='book-grid-search' placeholder='我想要找......' type='text'></input></div>"),
             height: 550,
             sortable: true,
             pageable: {
@@ -96,9 +113,31 @@
                 { field: "BookPublisher", title: "出版社", width: "15%" },
                 { command: { text: "刪除", /*click: deleteBook*/ }, title: " ", width: "120px" }
             ]
+        });
 
+        $("#SearchBtn").click(function () {
+            $("#book_grid").data("kendoGrid").dataSource.filter({
+                logic: "or",
+                filters: [
+                    {
+                        field: "BookName",
+                        operator: "contains",
+                        value: $("#BookName")
+                    },
+                    {
+                        field: "BookAuthor",
+                        operator: "contains",
+                        value: $("#BookLendUser")
+                    },
+                    {
+                        field: "BookPublisher",
+                        operator: "contains",
+                        value: $("#BookStatus")
+                    },
+                ]
+            });
         });
     });
 
-    
+
 </script>

@@ -7,27 +7,18 @@ using System.Web;
 
 namespace BookManagement.Controllers
 {
-    public class IndexController : Controller
+    public class LibraryController : Controller
     {
         public ActionResult Index()
         {
             return View();
         }
 
+        /// GetDropDownList
         [HttpPost()]
-        public JsonResult GetTestData(string testString)
+        public JsonResult GetDropDownList()
         {
-            return Json(testString + " call ajax success!!");
-        }
-
-        [HttpPost()]
-        public JsonResult GetDropDownListData()
-        {
-            List<string> tempData = new List<string>();
-            tempData.Add("項目一");
-            tempData.Add("項目一");
-
-            return Json(tempData);
+            return
         }
     }
     public class BookController : Controller
@@ -62,6 +53,7 @@ namespace BookManagement.Controllers
             ViewBag.SearchResult = bookService.GetBookByCondtioin(arg);
             return View("Index");
         }
+
 
         /// <summary>
         /// 新增圖書畫面

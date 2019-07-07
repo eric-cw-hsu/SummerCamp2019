@@ -130,7 +130,7 @@
     <Content Include="Views\Book\BookData.cshtml" />
     <Content Include="Views\Book\UpdateBook.cshtml" />
     <Content Include="Views\Book\BookLendRecord.cshtml" />
-    <Content Include="Views\Index\Index.cshtml" />
+    <Content Include="Views\Library\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -27,7 +27,7 @@ namespace BookManagement.Controllers
         [HttpPost()]
         public JsonResult GetClass()
         {
-            return Json(this.CodeService.GetBookClassName()); 
+            return Json(this.CodeService.GetBookClassName());
         }
         /// GetDropDownList
         [HttpPost()]
@@ -41,6 +41,26 @@ namespace BookManagement.Controllers
         {
             return Json(this.CodeService.GetCodeName());
         }
+
+        ///DeleteBook
+        [HttpPost()]
+        public void DeleteBook(Models.Books arg)
+        {
+            BookService.DeleteBook(arg.BookID);
+        }
+
+        public ActionResult InsertBook()
+        {
+            return View("InsertBook");
+        }
+
+        ///InsertBook
+        [HttpPost()]
+        public void InsertBook(Models.Books arg)
+        {
+            BookService.InsertBook(arg);
+        }
+        
     }
     
     public class BookController : Controller

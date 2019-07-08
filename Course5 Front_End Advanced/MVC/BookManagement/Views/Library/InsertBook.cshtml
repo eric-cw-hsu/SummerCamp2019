@@ -1,0 +1,90 @@
+﻿
+@{
+    ViewBag.Title = "InsertBook";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 style="font-family:Microsoft JhengHei;">新增書籍</h2>
+
+<table class="table table-bordered table-hover">
+    <tr>
+        <td>書名</td>
+        <td>
+            <input id="BookName" />
+        </td>
+    </tr>
+    <tr>
+        <td>作者</td>
+        <td>
+            <input id="BookAuthor" />
+        </td>
+    </tr>
+    <tr>
+        <td>出版商</td>
+        <td>
+            <input id="BookPublisher" />
+        </td>
+    </tr>
+    <tr>
+        <td>內容簡介</td>
+        <td>
+            <textarea cols="40" rows="5" id="BookNote"></textarea>
+        </td>
+    </tr>
+    <tr>
+        <td>購書日期</td>
+        <td>
+            <input type="date" id="BookBoughtDate" />
+        </td>
+    </tr>
+    <tr>
+        <td>圖書類別</td>
+        <td>
+            <select id="BookClassName"></select>
+        </td>
+    </tr>
+    <tr>
+        <td></td>
+        <td><button id="InsertBtn">儲存</button></td>
+    </tr>
+</table>
+
+<script>
+    $(document).ready(function (){
+        $("#BookClassName").kendoDropDownList({
+            dataTextField: "Text",
+            dataValueField: "Value",
+            dataSource: {
+                transport: {
+                    read: {
+                        method: "post",
+                        dataType: "json",
+                        url: "GetClass"
+                    }
+                }
+            },
+            index: 0
+        });
+
+        $("#InsertBtn").click(function () {
+            console.log($("#BookClassName").val());
+            var data = {
+                BookName: $("#BookName").val(),
+                BookAuthor: $("#BookAuthor").val(),
+                BookPublisher: $("#BookPublisher").val(),
+                BookNote: $("#BookNote").val(),
+                BookBoughtDate: $("#BookBoughtDate").val(),
+                BookClassID: $("#BookClassName").val(),
+            }
+            $.ajax({
+                method: "post",
+                url: "InsertBook",
+                dataType: "Json",
+                data: data
+            })
+
+            alert("新增成功");
+            location = "Library/Index";
+        })
+    })
+</script>

@@ -1,4 +1,4 @@
-﻿@model BookManagement.Models.BookSearchArg
+﻿
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -99,7 +99,6 @@
         })
 
         $("#SearchBtn").click(function () {
-            console.log($("#BookLendUser").val());
             var SearchData = {
                 "BookName": $('#BookName').val(),
                 "BookClassName": $('#BookClass').val(),
@@ -120,12 +119,12 @@
                     schema: {
                         model: {
                             fields: {
-                                BookId: { type: "int" },
+                                BookID: { type: "int" },
                                 BookName: { type: "string" },
-                                BookCastegory: { type: "string" },
-                                BookAuthor: { type: "string" },
-                                BookBoughtDate: { type: "string" },
-                                BookPublisher: { type: "string" }
+                                UserName: { type: "string" },
+                                BookClassName: { type: "string" },
+                                CodeName: { type: "string" },
+                                CodeID: { type: "string" }
                             }
                         }
                     },
@@ -143,7 +142,7 @@
                     { field: "UserName", title: "借閱人", width: "20%" },
                     { field: "BookClassName", title: "圖書類別", width: "20%" },
                     { field: "CodeName", title: "借閱狀態", width: "10%" },
-                    { command: { text: "刪除", /*click: deleteBook*/ }, title: " ", width: "120px" }
+                    { command: { text: "刪除", click: deleteBook }, title: " ", width: "120px" }
                 ]
             });
         });
@@ -154,5 +153,24 @@
        
     });
 
+    function deleteBook(option) {
+        var grid = $("#book_grid").data("kendoGrid");
+        var dataItem = grid.dataItem($(option.currentTarget).closest("tr"));
 
+        if (confirm("確定刪除 " + dataItem.BookName + " ?")) {
+            if (dataItem.CodeName == "已借出" || dataItem.BookClass == "不可借出") {
+                alert("此書不可被借出!");
+            }
+            else {
+                $.ajax({
+                    method: "post",
+                    url: "DeleteBook",
+                    dataType: "Json",
+                    data: { "BookID": dataItem.BookID }
+                })
+                alert("刪除成功");
+                $("#book_grid").data("kendoGrid").dataSource.read();                
+            }          
+        }
+    };
 </script>

@@ -28,7 +28,7 @@
     <tr>
         <td>內容簡介</td>
         <td>
-            <textarea cols="40" rows="5" id="BookNote"></textarea>
+            <textarea cols="40" rows="3" id="BookNote"></textarea>
         </td>
     </tr>
     <tr>
@@ -129,7 +129,7 @@
             $("#BookAuthor").val(e[0].BookAuthor);
             $("#BookPublisher").val(e[0].BookPublisher);
             $("#BookNote").val(e[0].BookNote);
-            $("#BookBoughtDate").val(e[0].BookBoughtDate);
+            $("#BookBoughtDate").data('kendoDatePicker').value(e[0].BookBoughtDate);
             $("#BookClassName").data('kendoDropDownList').text(e[0].BookClassName);
             $("#CodeName").data('kendoDropDownList').text(e[0].CodeName);
             $("#UserName").data('kendoDropDownList').text(e[0].UserName);
@@ -154,7 +154,7 @@
         });
 
         $("#UpdateBtn").click(function () {
-            console.log($("#BookClassName").text());
+            console.log($("#BookClassName").data('kendoDropDownList').text());
             if (confirm("確定更新 " + $("#BookName").val() + " ?")) {
                 /*
                 $.ajax({
@@ -169,16 +169,20 @@
                 $.ajax({
                     method: "post",
                     url: "UpdateBook",
+                    dataType: "Json",
                     data: {
                         "BookID": BookId,
                         "BookName": $("#BookName").val(),
                         "BookAuthor": $("#BookAuthor").val(),
                         "BookPublisher": $("#BookPublisher").val(),
                         "BookNote": $("#BookNote").val(),
-                        "BookBoughtDate": $("#BookBoughtDate").val(),
+                        "BookBoughtDate": kendo.toString($("#BookBoughtDate").data('kendoDatePicker').value(), "yyyy/MM/dd"),
                         "BookClassID": $("#BookClassName").val(),
+                        "BookClassName": $("#BookClassName").data('kendoDropDownList').text(),
                         "CodeID": $("#CodeName").val(),
-                        "UserName": $("#UserName").val(),
+                        "CodeName": $("#CodeName").data('kendoDropDownList').text(),
+                        "UserID": $("#UserName").val(),
+                        "UserName": $("#UserName").data('kendoDropDownList').text()
                     }
                 });
                 alert("更新成功");

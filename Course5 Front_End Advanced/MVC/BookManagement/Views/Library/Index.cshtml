@@ -99,78 +99,57 @@
         })
 
         $("#SearchBtn").click(function () {
+            var SearchData = {
+                "BookName": $('#BookName').val(),
+                "BookClassId": $('#BookClass').val(),
+                "KeeperId": $('#BookKeeper').val(),
+                "BookStatusId": $('#BookStatus').val()
+            }
 
-        })
-        /*
-        $("#book_category").kendoDropDownList({
-            dataTextField: "text",
-            dataValueField: "value",
-            dataSource: data,
-            index: 0,
-            change: onChange
-        });
-        */
-        $("#book_grid").kendoGrid({
-            dataSource: {
-                transport: {
-                    read: {
-                        method: "post",
-                        dataType: "json",
-                        url: "GetBookData"
-                    }
-                },
-                schema: {
-                    model: {
-                        fields: {
-                            BookId: { type: "int" },
-                            BookName: { type: "string" },
-                            BookCastegory: { type: "string" },
-                            BookAuthor: { type: "string" },
-                            BookBoughtDate: { type: "string" },
-                            BookPublisher: { type: "string" }
+            $("#book_grid").kendoGrid({
+                dataSource: {
+                    transport: {
+                        read: {
+                            method: "post",
+                            dataType: "json",
+                            url: "GetBookData"
                         }
-                    }
+                    },
+                    schema: {
+                        model: {
+                            fields: {
+                                BookId: { type: "int" },
+                                BookName: { type: "string" },
+                                BookCastegory: { type: "string" },
+                                BookAuthor: { type: "string" },
+                                BookBoughtDate: { type: "string" },
+                                BookPublisher: { type: "string" }
+                            }
+                        }
+                    },
+                    pageSize: 20,
                 },
-                pageSize: 20,
-            },
-            //toolbar: kendo.template("<div class='book-grid-toolbar'><input class='book-grid-search' placeholder='我想要找......' type='text'></input></div>"),
-            height: 550,
-            sortable: true,
-            pageable: {
-                input: true,
-                numeric: false
-            },
-            columns: [
-                { field: "BookName", title: "書名", width: "40%" },
-                { field: "UserName", title: "借閱人", width: "20%" },
-                { field: "BookClassName", title: "圖書類別", width: "20%" },
-                { field: "CodeName", title: "借閱狀態", width: "10%" },
-                { command: { text: "刪除", /*click: deleteBook*/ }, title: " ", width: "120px" }
-            ]
-        });
-
-        $("#SearchBtn").click(function () {
-            $("#book_grid").data("kendoGrid").dataSource.filter({
-                logic: "or",
-                filters: [
-                    {
-                        field: "BookName",
-                        operator: "contains",
-                        value: $("#BookName")
-                    },
-                    {
-                        field: "BookAuthor",
-                        operator: "contains",
-                        value: $("#BookLendUser")
-                    },
-                    {
-                        field: "BookPublisher",
-                        operator: "contains",
-                        value: $("#BookStatus")
-                    },
+                //toolbar: kendo.template("<div class='book-grid-toolbar'><input class='book-grid-search' placeholder='我想要找......' type='text'></input></div>"),
+                height: 550,
+                sortable: true,
+                pageable: {
+                    input: true,
+                    numeric: false
+                },
+                columns: [
+                    { field: "BookName", title: "書名", width: "40%" },
+                    { field: "UserName", title: "借閱人", width: "20%" },
+                    { field: "BookClassName", title: "圖書類別", width: "20%" },
+                    { field: "CodeName", title: "借閱狀態", width: "10%" },
+                    { command: { text: "刪除", /*click: deleteBook*/ }, title: " ", width: "120px" }
                 ]
             });
         });
+
+       
+        
+
+       
     });
 
 

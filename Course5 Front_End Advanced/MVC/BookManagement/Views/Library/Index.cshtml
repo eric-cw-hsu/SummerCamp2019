@@ -99,11 +99,12 @@
         })
 
         $("#SearchBtn").click(function () {
+            console.log($("#BookLendUser").val());
             var SearchData = {
                 "BookName": $('#BookName').val(),
-                "BookClassId": $('#BookClass').val(),
-                "KeeperId": $('#BookKeeper').val(),
-                "BookStatusId": $('#BookStatus').val()
+                "BookClassName": $('#BookClass').val(),
+                "UserName": $('#BookLendUser').val(),
+                "CodeName": $('#BookStatus').val()
             }
 
             $("#book_grid").kendoGrid({
@@ -112,7 +113,8 @@
                         read: {
                             method: "post",
                             dataType: "json",
-                            url: "GetBookData"
+                            url: "GetBookData",
+                            data: SearchData
                         }
                     },
                     schema: {

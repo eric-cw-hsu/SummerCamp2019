@@ -18,9 +18,8 @@ namespace BookManagement.Controllers
 
         ///GetBookByCondition
         [HttpPost()]
-        public JsonResult GetBookData()
+        public JsonResult GetBookData(Models.BookSearchArg arg)
         {
-            Models.BookSearchArg arg = new Models.BookSearchArg();
             return Json(BookService.GetBookByCondition(arg));
         }
 

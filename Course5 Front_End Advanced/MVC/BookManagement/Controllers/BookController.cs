@@ -3,6 +3,7 @@ using System.Web.Mvc;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Text.RegularExpressions;
 
 
 namespace BookManagement.Controllers
@@ -60,7 +61,39 @@ namespace BookManagement.Controllers
         {
             BookService.InsertBook(arg);
         }
+        /*
+        public ActionResult EditBook()
+        {
+            return View("EditBook");
+        }
+        */
+        ///EditBook
+        [HttpGet()]
+        public ActionResult EditBook()
+        {
+            return View("EditBook");
+        }
         
+        ///GetBookDetail
+        [HttpPost()]
+        public JsonResult GetBookDetail(int BookId)
+        {
+            return Json(BookService.GetBookDetail(BookId));
+        }
+
+        ///UpdateBook
+        [HttpPost()]
+        public void UpdateBook(Models.Books book)
+        {
+            BookService.UpdateBookData(book);
+        }
+
+        ///Replace <BR>
+        [HttpPost()]
+        public static string Replace(string BookNote)
+        { 
+            return Regex.Replace(BookNote.ToString(), "<BR>", "\r\n"); 
+        }
     }
     
     public class BookController : Controller

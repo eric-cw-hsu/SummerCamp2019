@@ -1,0 +1,190 @@
+﻿
+@{
+    ViewBag.Title = "EditBook";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 style="font-family:Microsoft JhengHei;">編輯書籍</h2>
+
+<table class="table table-bordered table-hover">
+    <tr>
+        <td>書名</td>
+        <td>
+            <input id="BookName" />
+        </td>
+    </tr>
+    <tr>
+        <td>作者</td>
+        <td>
+            <input id="BookAuthor" />
+        </td>
+    </tr>
+    <tr>
+        <td>出版商</td>
+        <td>
+            <input id="BookPublisher" />
+        </td>
+    </tr>
+    <tr>
+        <td>內容簡介</td>
+        <td>
+            <textarea cols="40" rows="5" id="BookNote"></textarea>
+        </td>
+    </tr>
+    <tr>
+        <td>購書日期</td>
+        <td>
+            <input type="date" id="BookBoughtDate" />
+        </td>
+    </tr>
+    <tr>
+        <td>圖書類別</td>
+        <td>
+            <select id="BookClassName"></select>
+        </td>
+    </tr>
+    <tr>
+        <td>借閱狀態</td>
+        <td>
+            <select id="CodeName"></select>
+        </td>
+    </tr>
+    <tr>
+        <td>借閱人</td>
+        <td>
+            <select id="UserName"></select>
+        </td>
+    </tr>
+    <tr>
+        <td></td>
+        <td><button class="btn btn-default btn-Delete"  id="DeleteBtn">刪除</button><button class="btn btn-default" id="UpdateBtn">存檔</button></td>
+    </tr>
+</table>
+
+<script>
+    $(document).ready(function () {
+
+        $("#BookClassName").kendoDropDownList({
+            dataTextField: "Text",
+            dataValueField: "Value",
+            dataSource: {
+                transport: {
+                    read: {
+                        method: "post",
+                        dataType: "json",
+                        url: "GetClass"
+                    }
+                }
+            },
+            index: 0
+        });
+        $("#UserName").kendoDropDownList({
+            dataTextField: "Text",
+            dataValueField: "Value",
+            dataSource: {
+                transport: {
+                    read: {
+                        method: "post",
+                        dataType: "json",
+                        url: "GetUserName"
+                    }
+                }
+            },
+            index: 0
+        });
+
+        $("#CodeName").kendoDropDownList({
+            dataTextField: "Text",
+            dataValueField: "Value",
+            dataSource: {
+                transport: {
+                    read: {
+                        method: "post",
+                        dataType: "json",
+                        url: "GetStatus"
+                    }
+                }
+            },
+            index: 0
+        });
+
+        $("#BookBoughtDate").kendoDatePicker({
+            value: new Date(),
+            format: "yyyy-MM-dd",
+            dateInput: true
+        });
+
+        //Get data from url(get)
+        var url = location.search;
+        var BookId = parseInt(url.split('?')[1]);
+        var Data = {};
+
+        $.ajax({
+            method: "post",
+            dateType: "Json",
+            url: "GetBookDetail",
+            data: { "BookID": BookId }
+        }).done(function (e) {
+            $("#BookName").val(e[0].BookName);
+            $("#BookAuthor").val(e[0].BookAuthor);
+            $("#BookPublisher").val(e[0].BookPublisher);
+            $("#BookNote").val(e[0].BookNote);
+            $("#BookBoughtDate").val(e[0].BookBoughtDate);
+            $("#BookClassName").data('kendoDropDownList').text(e[0].BookClassName);
+            $("#CodeName").data('kendoDropDownList').text(e[0].CodeName);
+            $("#UserName").data('kendoDropDownList').text(e[0].UserName);
+        });
+        //end Get Data 
+
+        $("#DeleteBtn").click(function() {
+            console.log($("#CodeName").val());
+            if (confirm("確定刪除 " + $("#BookName").val() + " ?")) {
+                if ($("#CodeName").val() == "B" || $("#CodeName").val() == "U" || $("#CodeName").val() == "C") {
+                    alert("此書不可被刪除!");
+                }
+                else {
+                    $.ajax({
+                        method: "post",
+                        url: "DeleteBook",
+                        data: { "BookID": BookId }
+                    })
+                    alert("刪除成功");
+                }
+            }
+        });
+
+        $("#UpdateBtn").click(function () {
+            console.log($("#BookClassName").text());
+            if (confirm("確定更新 " + $("#BookName").val() + " ?")) {
+                /*
+                $.ajax({
+                    method: "post",
+                    url: "Replace",
+                    data: $("#BookNote").val()
+                }).done(function (e) {
+                    console.log(e);
+                    $("#BookNote").val(e);
+                })
+                */
+                $.ajax({
+                    method: "post",
+                    url: "UpdateBook",
+                    data: {
+                        "BookID": BookId,
+                        "BookName": $("#BookName").val(),
+                        "BookAuthor": $("#BookAuthor").val(),
+                        "BookPublisher": $("#BookPublisher").val(),
+                        "BookNote": $("#BookNote").val(),
+                        "BookBoughtDate": $("#BookBoughtDate").val(),
+                        "BookClassID": $("#BookClassName").val(),
+                        "CodeID": $("#CodeName").val(),
+                        "UserName": $("#UserName").val(),
+                    }
+                });
+                alert("更新成功");
+            }
+        });
+    })
+
+    
+</script>

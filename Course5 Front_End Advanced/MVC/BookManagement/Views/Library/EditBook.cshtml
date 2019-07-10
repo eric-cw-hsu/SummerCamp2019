@@ -129,7 +129,7 @@
             $("#BookAuthor").val(e[0].BookAuthor);
             $("#BookPublisher").val(e[0].BookPublisher);
             $("#BookNote").val(e[0].BookNote);
-            $("#BookBoughtDate").data('kendoDatePicker').value(e[0].BookBoughtDate);
+            $("#BookBoughtDate").val(e[0].BookBoughtDate);
             $("#BookClassName").data('kendoDropDownList').text(e[0].BookClassName);
             $("#CodeName").data('kendoDropDownList').text(e[0].CodeName);
             $("#UserName").data('kendoDropDownList').text(e[0].UserName);
@@ -154,24 +154,20 @@
         });
 
         $("#UpdateBtn").click(function () {
-            console.log($("#BookClassName").data('kendoDropDownList').text());
+            
+            var str = $("BookNote").val();
+            var regex = /<br\s*[\/]?>/gi;
+            str = str.replace(regex, "\n");
+            console.log(str);
+            $("BookNote").val(str);
+            
+
             if (confirm("確定更新 " + $("#BookName").val() + " ?")) {
-                /*
-                $.ajax({
-                    method: "post",
-                    url: "Replace",
-                    data: $("#BookNote").val()
-                }).done(function (e) {
-                    console.log(e);
-                    $("#BookNote").val(e);
-                })
-                */
                 $.ajax({
                     method: "post",
                     url: "UpdateBook",
                     dataType: "Json",
                     data: {
-                        "BookID": BookId,
                         "BookName": $("#BookName").val(),
                         "BookAuthor": $("#BookAuthor").val(),
                         "BookPublisher": $("#BookPublisher").val(),

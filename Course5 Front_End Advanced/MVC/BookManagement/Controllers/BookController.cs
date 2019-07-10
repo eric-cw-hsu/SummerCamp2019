@@ -87,13 +87,6 @@ namespace BookManagement.Controllers
         {
             BookService.UpdateBookData(book);
         }
-
-        ///Replace <BR>
-        [HttpPost()]
-        public static string Replace(string BookNote)
-        { 
-            return Regex.Replace(BookNote.ToString(), "<BR>", "\r\n"); 
-        }
     }
     
     public class BookController : Controller

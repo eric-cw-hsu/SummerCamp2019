@@ -141,7 +141,7 @@
                     { field: "UserName", title: "借閱人", width: "20%" },
                     { field: "BookClassName", title: "圖書類別", width: "20%" },
                     { field: "CodeName", title: "借閱狀態", width: "10%" },
-                    { command: { text: "借閱紀錄", click: BookRecord }, title: " ", width: "130px" },
+                    { command: { text: "借閱紀錄", click: BookLendRecord }, title: " ", width: "130px" },
                     { command: { text: "編輯", click: EditBook }, title: " ", width: "90px" },
                     { command: { text: "刪除", click: deleteBook }, title: " ", width: "90px" }
                 ]
@@ -182,7 +182,10 @@
         location = "EditBook?" + dataItem.BookID;
     }
 
-    function BookRecord(optrion) {
-        location = "BookRecord?" + dataItem.BookID;
+    function BookLendRecord(option) {
+        var grid = $("#book_grid").data("kendoGrid");
+        var dataItem = grid.dataItem($(option.currentTarget).closest("tr"));
+
+        location = "BookLendRecord?" + dataItem.BookID;
     }
 </script>

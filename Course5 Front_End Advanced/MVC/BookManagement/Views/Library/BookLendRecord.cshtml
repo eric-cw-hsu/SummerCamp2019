@@ -1,0 +1,30 @@
+﻿
+
+@{
+    ViewBag.Title = "BookLendRecord";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>借閱紀錄</h2>
+
+<script>
+    $(document).ready(function () {
+        //Get BookID from url(get) + declaration
+        var url = location.search;
+        var BookId = parseInt(url.split('?')[1]);
+        var Data = {};
+        //GetBookLendRecord
+        $.ajax({
+            method: "post",
+            url: "GetLendBookRecord",
+            dataType: "Json",
+            data: BookId
+        }).done(function (e) {
+            Data = e[0];
+            })
+
+        console.log(Data);
+    })
+    
+</script>
+

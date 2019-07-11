@@ -133,6 +133,7 @@
     <Content Include="Views\Library\Index.cshtml" />
     <Content Include="Views\Library\InsertBook.cshtml" />
     <Content Include="Views\Library\EditBook.cshtml" />
+    <Content Include="Views\Library\BookLendRecord.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

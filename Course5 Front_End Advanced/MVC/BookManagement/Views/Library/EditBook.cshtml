@@ -154,13 +154,13 @@
         });
 
         $("#UpdateBtn").click(function () {
-            
+            /*
             var str = $("BookNote").val();
             var regex = /<br\s*[\/]?>/gi;
             str = str.replace(regex, "\n");
             console.log(str);
             $("BookNote").val(str);
-            
+            */
 
             if (confirm("確定更新 " + $("#BookName").val() + " ?")) {
                 $.ajax({
@@ -168,20 +168,22 @@
                     url: "UpdateBook",
                     dataType: "Json",
                     data: {
+                        "BookID": BookId,
                         "BookName": $("#BookName").val(),
                         "BookAuthor": $("#BookAuthor").val(),
                         "BookPublisher": $("#BookPublisher").val(),
                         "BookNote": $("#BookNote").val(),
                         "BookBoughtDate": kendo.toString($("#BookBoughtDate").data('kendoDatePicker').value(), "yyyy/MM/dd"),
-                        "BookClassID": $("#BookClassName").val(),
-                        "BookClassName": $("#BookClassName").data('kendoDropDownList').text(),
-                        "CodeID": $("#CodeName").val(),
-                        "CodeName": $("#CodeName").data('kendoDropDownList').text(),
-                        "UserID": $("#UserName").val(),
-                        "UserName": $("#UserName").data('kendoDropDownList').text()
+                        //"BookClassID": $("#BookClassName").val(),
+                        "BookClassName": $("#BookClassName").data('kendoDropDownList').value(),
+                        //"CodeID": $("#CodeName").val(),
+                        "CodeName": $("#CodeName").data('kendoDropDownList').value(),
+                        //"UserID": $("#UserName").val(),
+                        "UserName": $("#UserName").data('kendoDropDownList').value(),
                     }
                 });
                 alert("更新成功");
+                location.herf = "Library/Index";
             }
         });
     })

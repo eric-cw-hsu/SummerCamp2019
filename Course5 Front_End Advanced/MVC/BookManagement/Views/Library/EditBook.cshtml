@@ -125,7 +125,6 @@
             url: "GetBookDetail",
             data: { "BookID": BookId }
         }).done(function (e) {
-            console.log(e);
             $("#BookName").val(e[0].BookName);
             $("#BookAuthor").val(e[0].BookAuthor);
             $("#BookPublisher").val(e[0].BookPublisher);
@@ -150,7 +149,7 @@
                         data: { "BookID": BookId }
                     })
                     alert("刪除成功");
-                    location = "Library/Index"; 
+                    location = "Index"; 
                 }
             }
         });
@@ -185,7 +184,8 @@
                     }
                 });
                 alert("更新成功");
-                location.herf = "Library/Index";
+
+                location = "Index";
             }
         });
     })

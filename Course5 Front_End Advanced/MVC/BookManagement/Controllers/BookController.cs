@@ -91,9 +91,9 @@ namespace BookManagement.Controllers
         }
         ///GetBookRecord
         [HttpPost()]
-        public List<Models.Books> GetBookLendRecord(int BookId)
+        public JsonResult GetBookLendRecord(int BookId)
         {
-            return BookService.GetBookLendRecord(BookId);
+            return Json(BookService.GetBookLendRecord(BookId));
         }
     }
 }

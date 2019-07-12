@@ -340,7 +340,8 @@ namespace BookManagement.Models
             DataTable dtmodify = new DataTable();
             string sql = @"SELECT bd.BOOK_NAME AS BookName,
                                   blr.BOOK_ID AS BookID,
-	                              (mm.USER_ENAME +'-'+ mm.USER_CNAME) AS UserName,
+	                              mm.USER_ENAME AS USER_ENAME,
+                                  mm.USER_CNAME AS USER_CNAME,
                                   blr.KEEPER_ID AS UserID,
 	                              CONVERT(char(10),blr.LEND_DATE,111) AS LendDate
                            FROM BOOK_LEND_RECORD blr
@@ -376,7 +377,8 @@ namespace BookManagement.Models
                 {
                     BookID = (int)row["BookID"],
                     BookName = row["BookName"].ToString(),
-                    UserName = row["UserName"].ToString(),
+                    UserCName = row["USER_CNAME"].ToString(),
+                    UserEName = row["USER_ENAME"].ToString(),
                     UserID = row["UserID"].ToString(),
                     LendDate = row["LendDate"].ToString()
                 });

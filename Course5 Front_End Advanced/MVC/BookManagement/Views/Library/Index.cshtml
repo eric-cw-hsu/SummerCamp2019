@@ -8,25 +8,25 @@
 
 <table class="table table-bordered table-hover">
     <tr>
-        <td>書名</td>
+        <td style="text-align: right">書名</td>
         <td>
             <input id="BookName" />
         </td>
     </tr>
     <tr>
-        <td>圖書類別</td>
+        <td style="text-align: right">圖書類別</td>
         <td>
             <select id="BookClass"></select>
         </td>
     </tr>
     <tr>
-        <td>借閱人</td>
+        <td style="text-align: right">借閱人</td>
         <td>
             <select id="BookLendUser"></select>
         </td>
     </tr>
     <tr>
-        <td>借閱狀態</td>
+        <td style="text-align: right">借閱狀態</td>
         <td>
             <select id="BookStatus"></select>
         </td>
@@ -43,8 +43,57 @@
 
 <div id="book_grid"></div>
 
+
+<div id="BookLendRecord_window" style="display: none;">
+    <div id="BookLendRecord_grid"></div>
+</div>
+
+<div id="Detail_Window" style="display: none;">
+    <table class="table table-bordered">
+        <tr>
+            <td style="text-align: right">書名</td>
+            <td id="DetailBookName"></td>
+        </tr>
+        <tr>
+            <td style="text-align: right">作者</td>
+            <td id="DetailAuthor"></td>
+        </tr>
+        <tr>
+            <td style="text-align: right">出版商</td>
+            <td id="DetailPublisher"></td>
+        </tr>
+        <tr>
+            <td style="text-align: right">內容簡介</td>
+            <td id="DetailNote"></td>
+        </tr>
+        <tr>
+            <td style="text-align: right">購書日期</td>
+            <td id="DetailBoughtDate"></td>
+        </tr>
+        <tr>
+            <td style="text-align: right">圖書類別</td>
+            <td id="DetailClass"></td>
+        </tr>
+    </table>
+</div>
+
 <script>
     $(document).ready(function () {
+        $("#BookLendRecord_window").kendoWindow({
+            width: "600px",
+            title: "借閱紀錄",
+            visible: false,
+            modal: true
+        });
+
+        $("#Detail_Window").kendoWindow({
+            title: "書籍明細",
+            width: "40%",
+            visible: false,
+            modal: true,
+            modal: true
+        });
+
         $("#BookClass").kendoDropDownList({
             dataTextField: "Text",
             dataValueField: "Value",
@@ -137,10 +186,11 @@
                     numeric: false
                 },
                 columns: [
-                    { field: "BookName", title: "書名", width: "40%" },
-                    { field: "UserName", title: "借閱人", width: "20%" },
                     { field: "BookClassName", title: "圖書類別", width: "20%" },
+                    { field: "BookName", title: "書名", width: "40%", template: "<div onclick='BookDetail(this);'>#:BookName#</div>" },
+                    { field: "BookBoughtDate", title: "購書日期", width: "20%" },
                     { field: "CodeName", title: "借閱狀態", width: "10%" },
+                    { field: "UserName", title: "借閱人", width: "20%" },
                     { command: { text: "借閱紀錄", click: BookLendRecord }, title: " ", width: "130px" },
                     { command: { text: "編輯", click: EditBook }, title: " ", width: "90px" },
                     { command: { text: "刪除", click: deleteBook }, title: " ", width: "90px" }
@@ -182,10 +232,67 @@
         location = "EditBook?" + dataItem.BookID;
     }
 
-    function BookLendRecord(option) {
-        var grid = $("#book_grid").data("kendoGrid");
-        var dataItem = grid.dataItem($(option.currentTarget).closest("tr"));
+    function BookLendRecord(options) {
+        var DataItem = this.dataItem($(options.currentTarget).closest("tr"));
+        $("#BookLendRecord_grid").kendoGrid({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "GetBookLendRecord",
+                        type: "post",
+                        dataType: "json",
+                        data: { "BookId": DataItem.BookID }
+                    }
+                },
+                schema: {
+                    model: {
+                        fields: {
+                            LendDate: { type: "string" },
+                            UserID: { type: "string" },
+                            UserCName: { type: "string" },
+                            UserEName: { type: "string" }
+                        }
+                    }
+                },
+                pageSize: 20
+            },
+            height: 500,
+            sortable: true,
+            pageable: {
+                refresh: true,
+                input: true,
+                numeric: true
+            },
+            columns: [
+                { field: "LendDate", title: "借閱日期", width: "25%" },
+                { field: "UserID", title: "借閱人員編號", width: "25%" },
+                { field: "UserEName", title: "英文姓名", width: "25%" },
+                { field: "UserCName", title: "中文姓名", width: "25%" }
+            ]
+        });
 
-        location = "BookLendRecord?" + dataItem.BookID;
+        $("#BookLendRecord_window").data("kendoWindow").center().open();
     }
+
+    function BookDetail(options){
+        var DataItem = $("#book_grid").data("kendoGrid").dataItem(options.closest("tr"));
+
+        $.ajax({
+            method: "post",
+            url: "GetBookDetail",
+            dataType: "Json",
+            data: { "BookId": DataItem.BookID },
+        }).done(function (e) {
+            console.log(e);
+            $("#DetailBookName").text(e[0].BookName == null ? "" : e[0].BookName);
+            $("#DetailAuthor").text(e[0].BookAuthor == null ? "" : e[0].BookAuthor);
+            $("#DetailPublisher").text(e[0].BookPublisher == null ? "" : e[0].BookPublisher);
+            $("#DetailNote").text(e[0].BookNote == null ? "" : e[0].BookNote);
+            $("#DetailBoughtDate").text(e[0].BookBoughtDate == null ? "" : e[0].BookBoughtDate);
+            $("#DetailClass").text(e[0].BookClassName == null ? "" : e[0].BookClassName);
+        });
+
+        $('#Detail_Window').data("kendoWindow").center().open();
+    }
+    
 </script>

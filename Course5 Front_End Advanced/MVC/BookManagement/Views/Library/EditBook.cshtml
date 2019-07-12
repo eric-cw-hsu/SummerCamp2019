@@ -125,6 +125,7 @@
             url: "GetBookDetail",
             data: { "BookID": BookId }
         }).done(function (e) {
+            console.log(e);
             $("#BookName").val(e[0].BookName);
             $("#BookAuthor").val(e[0].BookAuthor);
             $("#BookPublisher").val(e[0].BookPublisher);
@@ -149,18 +150,19 @@
                         data: { "BookID": BookId }
                     })
                     alert("刪除成功");
+                    location = "Library/Index"; 
                 }
             }
         });
 
         $("#UpdateBtn").click(function () {
-            /*
-            var str = $("BookNote").val();
+            
+            var str = $("#BookNote").val();
             var regex = /<br\s*[\/]?>/gi;
             str = str.replace(regex, "\n");
             console.log(str);
-            $("BookNote").val(str);
-            */
+            $("#BookNote").val(str);
+            
 
             if (confirm("確定更新 " + $("#BookName").val() + " ?")) {
                 $.ajax({

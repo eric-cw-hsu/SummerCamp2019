@@ -93,5 +93,17 @@ namespace BookManagement.Models
         /// </summary>
         [DisplayName("借閱日期")]
         public string LendDate { get; set; }
+
+        /// <summary>
+        /// 英文姓名
+        /// </summary>
+        [DisplayName("英文姓名")]
+        public string UserEName { get; set; }
+
+        /// <summary>
+        /// 中文姓名
+        /// </summary>
+        [DisplayName("中文姓名")]
+        public string UserCName { get; set; }
     }
 }

@@ -7,6 +7,20 @@
 
 <h2>借閱紀錄</h2>
 
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>書名</th>
+            <th>借閱人員編號</th>
+            <th>借閱人</th>
+            <th>借閱日期</th>
+        </tr>
+    </thead>
+    <tbody>
+        <div id="BookLendTable"></div>
+    </tbody>
+</table>
+
 <script>
     $(document).ready(function () {
         //Get BookID from url(get) + declaration
@@ -16,14 +30,12 @@
         //GetBookLendRecord
         $.ajax({
             method: "post",
-            url: "GetLendBookRecord",
+            url: "GetBookLendRecord",
             dataType: "Json",
-            data: BookId
+            data: { "BookId": BookId }
         }).done(function (e) {
-            Data = e[0];
-            })
-
-        console.log(Data);
+            
+        });
     })
     
 </script>

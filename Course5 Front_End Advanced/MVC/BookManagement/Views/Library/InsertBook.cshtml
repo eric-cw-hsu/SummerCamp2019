@@ -6,41 +6,41 @@
 
 <h2 style="font-family:Microsoft JhengHei;">新增書籍</h2>
 
-<table class="table table-bordered table-hover">
+<table id="InsertTable"class="table table-bordered table-hover">
     <tr>
-        <td>書名</td>
+        <td style="text-align: right">書名</td>
         <td>
-            <input id="BookName" />
+            <input name="BookName" id="BookName"  required validationMessage="bookname is not valid"/>
         </td>
     </tr>
     <tr>
-        <td>作者</td>
+        <td style="text-align: right">作者</td>
         <td>
-            <input id="BookAuthor" />
+            <input name="BookAuthor" id="BookAuthor"  required validationMessage="bookauthor is not valid"/>
         </td>
     </tr>
     <tr>
-        <td>出版商</td>
+        <td style="text-align: right">出版商</td>
         <td>
-            <input id="BookPublisher" />
+            <input name="BookPublisher" id="BookPublisher"  required validationMessage="bookpublisher is not valid"/>
         </td>
     </tr>
     <tr>
-        <td>內容簡介</td>
+        <td style="text-align: right">內容簡介</td>
         <td>
-            <textarea cols="40" rows="5" id="BookNote"></textarea>
+            <textarea name="BookNote" cols="40" rows="5" id="BookNote"  required validationMessage="booknote is not valid"></textarea>
         </td>
     </tr>
     <tr>
-        <td>購書日期</td>
+        <td style="text-align: right">購書日期</td>
         <td>
-            <input type="date" id="BookBoughtDate" />
+            <input name="BookBoughtDate" type="date" id="BookBoughtDate"  required validationMessage="bookboughtname is not valid"/>
         </td>
     </tr>
     <tr>
-        <td>圖書類別</td>
+        <td style="text-align: right">圖書類別</td>
         <td>
-            <select id="BookClassName"></select>
+            <select name="BookClassName" id="BookClassName"  required validationMessage="bookclassname is not valid"></select>
         </td>
     </tr>
     <tr>
@@ -51,6 +51,7 @@
 
 <script>
     $(document).ready(function () {
+        validator = $("#InsertTable").kendoValidator().data("kendoValidator");
         $("#BookClassName").kendoDropDownList({
             dataTextField: "Text",
             dataValueField: "Value",
@@ -67,24 +68,28 @@
         });
 
         $("#InsertBtn").click(function () {
-            console.log($("#BookClassName").val());
-            var data = {
-                BookName: $("#BookName").val(),
-                BookAuthor: $("#BookAuthor").val(),
-                BookPublisher: $("#BookPublisher").val(),
-                BookNote: $("#BookNote").val(),
-                BookBoughtDate: $("#BookBoughtDate").val(),
-                BookClassID: $("#BookClassName").val(),
-            }
-            $.ajax({
-                method: "post",
-                url: "InsertBook",
-                dataType: "Json",
-                data: data
-            })
+            if (validator.validate()) {
+                var data = {
+                    BookName: $("#BookName").val(),
+                    BookAuthor: $("#BookAuthor").val(),
+                    BookPublisher: $("#BookPublisher").val(),
+                    BookNote: $("#BookNote").val(),
+                    BookBoughtDate: $("#BookBoughtDate").val(),
+                    BookClassID: $("#BookClassName").val(),
+                }
+                $.ajax({
+                    method: "post",
+                    url: "InsertBook",
+                    dataType: "Json",
+                    data: data
+                })
 
-            alert("新增成功");
-            location = "Library/Index";
+                alert("新增成功");
+                location = "Library/Index";
+            }
+            else {
+                alert("資料尚未完成");
+            }
         })
 
         $("#BookBoughtDate").kendoDatePicker({

@@ -187,7 +187,14 @@ $(document).ready(function() {
         modal: true,
         close: onClose
     })
+
+    $(document).on("click", ".k-overlay", function () {
+	    myWindow.data('kendoWindow').close();
+	});
 });
+
+
+
 
 
 
